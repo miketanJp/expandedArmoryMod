@@ -4,6 +4,8 @@ using Entitas;
 using PhantomBrigade;
 using PhantomBrigade.Data;
 using PhantomBrigade.Combat.Systems;
+using PhantomBrigade.Combat.Components;
+using YamlDotNet.Core.Tokens;
 
 namespace fragmentMod
 {
@@ -20,16 +22,26 @@ namespace fragmentMod
             foreach (var projectile in Contexts.sharedInstance.combat.GetEntities(CombatMatcher.DataLinkSubsystemProjectile))
             {
                 CombatContext combat = Contexts.sharedInstance.combat;
+                    Debug.Log("[1]Context Shared Instance (combat): " + combat.ToString());
 
                 var part = IDUtility.GetEquipmentEntity(projectile.parentPart.equipmentID);
+                    Debug.Log("[2]parent part: " + part.ToString());
+
                 var subsystem = IDUtility.GetEquipmentEntity(projectile.parentSubsystem.equipmentID);
+                    Debug.Log("[3]parent subsystem: " + subsystem.ToString());
+
                 var blueprint = subsystem.dataLinkSubsystem.data;
+                    Debug.Log("[4]Blueprint: " + blueprint.ToString());
+
                 var fragmentDelayFound = blueprint.TryGetFloat("fragment_delay", out float fragmentDelay, 0);
+                    Debug.Log("[5]Fragment Delay: " + fragmentDelayFound.ToString());
+
                 var fragmentKeyFound = blueprint.TryGetString("fragment_key", out string fragmentKey, null);
+                    Debug.Log("[6]Fragment Key: " + fragmentKeyFound.ToString());
 
-                Vector3 bodyAssetScale = Vector3.Scale(Vector3.zero, Vector3.one);
+                Vector3 bodyAssetScale = Vector3.Scale(Vector3.one, Vector3.zero);
+                    Debug.Log("[7]BodyAssetScale(x,y,z): " + bodyAssetScale.ToString());
 
-                ActionEntity parentAction = null;
                 AssetLink bodyAssetKey = null;
                 bool bodyAssetUsed = true;
 
@@ -38,26 +50,29 @@ namespace fragmentMod
                     if (projectile.flightInfo.time > fragmentDelay)
                     {
                         var fragmentBlueprint = DataMultiLinkerSubsystem.GetEntry(fragmentKey);
+                            Debug.Log("[8]fragmentBlueprint | " + fragmentBlueprint.ToString());
+
                         var projectileData = fragmentBlueprint.projectileProcessed;
+                            Debug.Log("[9]projectileData | " + projectileData.ToString());
 
                         //Destroy Current projectile
                         projectile.TriggerProjectile();
 
                         // Create new projectile.
                         var projectileNew = combat.CreateEntity();
+                            Debug.Log("[10]ProjectileNew (createEntity) | " + projectileNew.ToString());
 
                         // Attach the new projectile to the subsystem and part (parent).
-                        if (projectileNew.HasComponent(248))
+                        if (projectileNew.hasDataLinkSubsystemProjectile)
                         {
                             projectileNew.AddComponent(248, projectile.dataLinkSubsystemProjectile);
                             projectileNew.AddDataLinkSubsystemProjectile(projectileData);
                             projectileNew.GetComponent(248);
-                            Debug.Log("data link added");
-
+                            Debug.Log("[11]Projectile Data added/replaced! - result | " + " ProjectileData: ");
                         }
                         else
                         {
-                            Debug.Log("cannot get or add/replace projectile Data.");
+                            Debug.Log("[11]cannot add/replace projectile Data - result | " + " ProjectileData : ");
                         }
 
                         if (projectileNew.HasComponent(112))
@@ -65,22 +80,22 @@ namespace fragmentMod
 
                             projectileNew.AddParentPart(part.id.id);
                             projectileNew.GetComponent(112);
-                            Debug.Log("parent part added");
+                            Debug.Log("[12]parent part added | value: " + projectile.parentPart.equipmentID.ToString() + "(" + part.id.id.ToString() + ")");
                         }
                         else
                         {
-                            Debug.Log("cannot get or add/replace parent part");
+                            Debug.Log("[12]cannot add/replace parent part | value: " + projectile.parentPart.equipmentID.ToString() + "(" + part.id.id + ")");
                         }
 
                         if (projectileNew.HasComponent(113))
                         {
-                            projectile.ReplaceParentSubsystem(projectile.parentSubsystem.equipmentID);
+                            projectile.AddParentSubsystem(subsystem.id.id);
                             projectile.GetComponent(113);
-                            Debug.Log("parent subsystem added");
+                            Debug.Log("[13]parent subsystem added/replaced | value: " + projectile.parentSubsystem.equipmentID.ToString() + "(" + subsystem.id.id.ToString() + ")");
                         }
                         else
                         {
-                            Debug.Log("cannot get or add/replace parent subsystem");
+                            Debug.Log("[13]cannot add/replace parent subsystem | value: " + projectile.parentSubsystem.equipmentID.ToString() + "(" + subsystem.id.id.ToString() + ")");
                         }
 
                         if (projectile.HasComponent(148))
@@ -88,11 +103,11 @@ namespace fragmentMod
 
                             projectile.ReplaceComponent(148, projectile.projectileStartPosition);
                             projectile.GetComponent(148);
-                            Debug.Log("ProjectileStartPosition added");
+                            Debug.Log("[14]ProjectileStartPosition added | value: " + projectile.projectileStartPosition.v.ToString());
                         }
                         else
                         {
-                            Debug.Log("error startPosition");
+                            Debug.Log("[14]error startPosition");
                         }
 
                         if (projectile.HasComponent(112))
@@ -100,56 +115,56 @@ namespace fragmentMod
 
                             projectile.ReplaceParentPart(projectile.id.id);
                             projectile.GetComponent(112);
-                            Debug.Log("parent part added #2");
+                            Debug.Log("[15]parent part added #2 | value: " + projectile.id.id.ToString());
 
                         }
                         else
                         {
-                            Debug.Log("cannot get or add/replace ParentPart projectile #2");
+                            Debug.Log("[15]cannot add/replace ParentPart projectile #2 | value: " + projectile.id.id.ToString());
                         }
 
                         if (projectile.HasComponent(113))
                         {
 
-                            projectile.ReplaceParentSubsystem(projectile.parentSubsystem.equipmentID);
+                            projectile.ReplaceParentSubsystem(projectile.id.id);
                             projectile.GetComponent(113);
-                            Debug.Log("parent subsystem added #2");
+                            Debug.Log("[16]parent subsystem added #2 | value: " + projectile.id.id.ToString());
 
                         }
                         else
                         {
-                            Debug.Log("cannot get or add/replace ParentSubsystem projectile #2");
+                            Debug.Log("[16]cannot add/replace ParentSubsystem projectile #2 | value: " + projectile.id.id.ToString());
                         }
 
                         if (projectile.HasComponent(246))
                         {
                             projectile.ReplaceScale(bodyAssetScale);
                             projectile.GetComponent(246);
-                            Debug.Log("Projectile Scale added"); 
+                            Debug.Log("[17]Projectile Scale added | value: " + bodyAssetScale.ToString()); 
                         } else
                         {
-                            Debug.Log("error Projectile scale");
+                            Debug.Log("[17]error Projectile scale | value: " + bodyAssetScale.ToString());
                         }
 
                         if (projectile.HasComponent(91))
                         {
                             projectile.ReplaceLevel(projectile.level.i);
                             projectile.GetComponent(91);
-                            Debug.Log("Projectile level added");
+                            Debug.Log("[18]Projectile level added | value: " + projectile.level.i.ToString());
                         } else
                         {
-                            Debug.Log("error projectile level");
+                            Debug.Log("[18]error projectile level | value: " + projectile.level.i.ToString());
                         }
 
                         if (!projectile.HasComponent(132))
                         {
                             projectile.AddProjectileCollision(LayerMasks.projectileMask, 1.0f);
                             projectile.GetComponent(132);
-                            Debug.Log("Projectile collision added");
+                            Debug.Log("[19]Projectile collision added | value: " + LayerMasks.projectileMask.ToString());
 
                         } else
                         {
-                            Debug.Log("error Projectile collision");
+                            Debug.Log("[19]error Projectile collision | value: " + LayerMasks.projectileMask.ToString());
                         }
                         
 
@@ -157,78 +172,57 @@ namespace fragmentMod
                         {
                             projectile.ReplaceInflictedDamage(projectile.inflictedDamage.f);
                             projectile.GetComponent(83);
-                            Debug.Log("InflictedDamage added");
+                            Debug.Log("[20]InflictedDamage added | value: " + projectile.inflictedConcussion.f.ToString());
                         }
                         else
                         {
-                            Debug.Log("error InflictedDamage");
+                            Debug.Log("[20]error InflictedDamage | value " + projectile.inflictedDamage.f.ToString());
                         }
 
-                        if (projectile.HasComponent(151))
-                        {
-
-                            projectile.ReplaceProjectileTargetPosition(projectile.projectileTargetPosition.v);
-                            projectile.GetComponent(151);
-                            Debug.Log("ProjectileTargetPosition added #1");
-                        }
-                        else
-                        {
-                            Debug.Log("error TargetPosition #1");
-                        }
-
-                        if (projectile.HasComponent(151))
-                        {
-                            projectile.ReplaceProjectileTargetPosition(projectile.projectileTargetPosition.v);
-                            projectile.GetComponent(151);
-                            Debug.Log("ProjectileTargetPosition added #2");
-                        }
-                        else
-                        {
-                            Debug.Log("error TargetPosition #2");
-                        }
+                        
 
                         if (projectile.HasComponent(141))
                         {
                             projectile.ReplaceProjectileGuidanceTargetPosition(projectile.projectileGuidanceTargetPosition.v);
                             projectile.GetComponent(141);
-                            Debug.Log("ProjectileGuidanceTargetPosition added");
+                            Debug.Log("[23]ProjectileGuidanceTargetPosition added | value: " + projectile.projectileGuidanceTargetPosition.v.ToString());
                         }
                         else
                         {
-                            Debug.Log("error ProjectileGuidanceTargetPosition");
+                            Debug.Log("[23]error ProjectileGuidanceTargetPosition | value: " + projectile.projectileGuidanceTargetPosition.v.ToString());
                         }
 
                         if (!projectile.HasComponent(97))
                         {
                             projectile.ReplaceMovementSpeedCurrent(1f);
                             projectile.GetComponent(97);
-                            Debug.Log("MovementSpeedCurrent added");
+                            Debug.Log("[24]MovementSpeedCurrent added | value: " + projectile.movementSpeedCurrent.f.ToString());
                         }
                         else
                         {
-                            Debug.Log("error MovementSpeedCurrent");
+                            Debug.Log("[25]error MovementSpeedCurrent | value: " + projectile.movementSpeedCurrent.f.ToString());
                         }
 
                         if (!projectile.hasRicochetChance)
                         {
                             projectile.AddRicochetChance(1f);
 
-                            Debug.Log("RicochetChance added");
+                            Debug.Log("[25]RicochetChance added | value: " + projectile.ricochetChance.f.ToString());
                         }
                         else
                         {
-                            Debug.Log("error RicochetChance");
+                            Debug.Log("[26]error RicochetChance | value: " + projectile.ricochetChance.f.ToString());
                         }
 
                         if (projectile.HasComponent(75))
                         {
                             projectile.ReplaceFlightInfo(0.0f, 0.0f, projectile.projectileStartPosition.v, projectile.projectileStartPosition.v);
                             projectile.GetComponent(75);
-                            Debug.Log("FlightInfo added");
+                            Debug.Log("[26]FlightInfo added | value: " + projectile.projectileStartPosition.v.ToString() + ", " + projectile.projectileStartPosition.v.ToString());
                         }
                         else
                         {
-                            Debug.Log("error FlightInfo");
+                            Debug.Log("[26]error FlightInfo | value: " + projectile.projectileStartPosition.v.ToString() + ", " + projectile.projectileStartPosition.v.ToString());
                         }
 
                         if (!projectile.HasComponent(190))
@@ -236,11 +230,11 @@ namespace fragmentMod
 
                             projectile.SimpleMovement = true;
                             projectile.GetComponent(190);
-                            Debug.Log("SimpleMovement added");
+                            Debug.Log("[27]SimpleMovement added | set to: true");
                         }
                         else
                         {
-                            Debug.Log("error SimpleMovement");
+                            Debug.Log("[27]error SimpleMovement | set to: false");
                         }
 
                         if (!projectile.HasComponent(188))
@@ -248,12 +242,12 @@ namespace fragmentMod
 
                             projectile.SimpleFaceMotion = true;
                             projectile.GetComponent(188);
-                            Debug.Log("SimpleFaceMotion added");
+                            Debug.Log("[28]SimpleFaceMotion added | set to: true");
 
                         }
                         else
                         {
-                            Debug.Log("error SimpleFaceMotion");
+                            Debug.Log("[28]error SimpleFaceMotion | set to: false");
                         }
 
                         if (projectile.HasComponent(148))
@@ -261,61 +255,61 @@ namespace fragmentMod
 
                             projectile.ReplacePosition(projectile.position.v);
                             projectile.GetComponent(148);
-                            Debug.Log("ProjectilePosition added");
+                            Debug.Log("[29]ProjectilePosition added | value: " + projectile.position.v.ToString());
                         }
                         else
                         {
-                            Debug.Log("error ProjectilePosition");
+                            Debug.Log("[29]error ProjectilePosition | value: " + projectile.position.v.ToString());
                         }
 
                         if (projectile.HasComponent(245))
                         {
                             projectile.ReplaceRotation(projectile.rotation.q);
                             projectile.GetComponent(245);
-                            Debug.Log("ProjectileRotation added");
+                            Debug.Log("[30]ProjectileRotation added | value: " + projectile.rotation.q.ToString());
                         }
                         else
                         {
-                            Debug.Log("error ProjectileRotation");
+                            Debug.Log("[30]error ProjectileRotation | value: " + projectile.rotation.q.ToString());
                         }
 
                         if (projectile.HasComponent(198))
                         {
 
-                            projectile.ReplaceSourceEntity(parentAction.actionOwner.combatID);
+                            projectile.ReplaceSourceEntity(projectile.sourceEntity.combatID);
                             projectile.GetComponent(198);
-                            Debug.Log("SourceEntity (parentAction) Added");
+                            Debug.Log("[31]SourceEntity (parentAction) Added | Parent Action: " + projectile.sourceEntity.combatID.ToString());
 
                         }
                         else
                         {
-                            Debug.Log("error replaceSourceEntity");
+                            Debug.Log("[31]error replaceSourceEntity | Parent Action: " + projectile.sourceEntity.combatID.ToString());
                         }
 
                         if (projectile.HasComponent(209))
                         {
 
-                            projectile.AddTimeToLive(projectile.timeToLive.f);
+                            projectile.ReplaceTimeToLive(projectile.timeToLive.f);
                             projectile.GetComponent(209);
-                            Debug.Log("HasTimeToLive Added");
+                            Debug.Log("[32]HasTimeToLive Added | value: " + projectile.timeToLive.f.ToString());
                         }
                         else
                         {
-                            Debug.Log("error TimeToLive");
+                            Debug.Log("[32]error TimeToLive | value: " + projectile.timeToLive.f.ToString());
                         }
 
 
                         if (bodyAssetUsed)
                         {
-                            Debug.Log("entered into BodyAssetKey");
-                            AssetPoolUtility.AttachInstance(bodyAssetKey.key, projectile, true);
+                            AssetPoolUtility.AttachInstance(projectile.assetKey.key, projectile, true);
+                            Debug.Log("[33]entered into BodyAssetKey | Asset Key: " + projectile.assetKey.key.ToString());
                         }
                         else
                         {
-                            Debug.Log("error BodyAssetKey");
+                            Debug.Log("[33]error BodyAssetKey | Asset Key: " + projectile.assetKey.key.ToString());
                         }
 
-                        Debug.Log("entered into second if (projectile logic). It works!");
+                        Debug.Log("[!!!FINAL!!!] - It works! -");
 
                     }
                 }
