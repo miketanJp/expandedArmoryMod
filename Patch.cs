@@ -150,6 +150,7 @@ namespace fragmentMod
 					// AttachTypeSpecificProjectileData().
 
 					var projectileNew = combat.CreateEntity();
+					ScheduledAttackSystem.AddInflictedDamageComponents(partMirv, projectileNew);
 					ScheduledAttackSystem.AttachGuidedProjectileData(
 						projectileNew,
 						projectile,
@@ -233,12 +234,6 @@ namespace fragmentMod
 						projectileNew.ReplaceProjectileIndex(projectile.projectileIndex.i);
 					}
 
-					if (projectile.hasInflictedDamage)
-					{
-						ScheduledAttackSystem.AddInflictedDamageComponents(partMirv, projectileNew);
-						projectileNew.ReplaceInflictedDamage(1.0f);
-					}
-
 					// MovementSpeedCurrent, FlightInfo, RicochetChange, SimpleMovement, SimpleFaceMotion appear
 					// to be used with only ballistic projectiles.
 
@@ -284,8 +279,7 @@ namespace fragmentMod
 					CombatReplayHelper.OnProjectileTransform(projectileNew, true);
 				}
 
-				//Destroy the projectile.
-				projectile.TriggerProjectile(true);
+				DestroyProjectile(projectile);
 			}
 
 			if (trace)

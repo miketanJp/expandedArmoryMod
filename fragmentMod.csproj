@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DestroyProjectile.cs" />
     <Compile Include="Patch.cs" />
     <Compile Include="ModLink.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
