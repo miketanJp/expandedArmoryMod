@@ -81,6 +81,13 @@ namespace fragmentMod
 					continue;
 				}
 
+				var fragmentCountFound = blueprint.TryGetInt("fragment_count", out var fragmentCount, 0);
+				debugInfo.Add((ReportFragmentCount, i, 0, (fragmentCountFound, fragmentCount)));
+				if (!fragmentCountFound)
+				{
+					continue;
+				}
+
 				var fragmentKeyFound = blueprint.TryGetString("fragment_key", out var fragmentKey, null);
 				debugInfo.Add((ReportFragmentKey, i, 0, (fragmentKeyFound, fragmentKey)));
 				if (!fragmentKeyFound)
@@ -135,7 +142,7 @@ namespace fragmentMod
 				// write the trace to the log.
 				trace = true;
 
-				for (var n = 0; n < 3; n += 1)
+				for (var n = 0; n < fragmentCount; n += 1)
 				{
 					// When ScheduledAttackSystem.ProcessProjectiles() creates a new projectile,
 					// will create a new CombatEntity and assign a number of properties (components) to

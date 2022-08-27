@@ -321,7 +321,9 @@ projectile:
           y: 0
         m: *o1
 beam: 
-custom: 
+custom:
+  ints:
+    fragment_count: 3
   floats:
     fragment_delay: 1
   strings:
