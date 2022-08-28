@@ -4,256 +4,289 @@ using Entitas;
 using PhantomBrigade;
 using PhantomBrigade.Data;
 using PhantomBrigade.Combat.Systems;
+
 using System;
-using UnityEngine.Assertions;
-using PhantomBrigade.Combat.Components;
+using System.Collections.Generic;
 
 namespace fragmentMod
 {
     [HarmonyPatch]
-    public class Patch
+    public partial class Patch
     {
-        [HarmonyPatch(typeof(GameController), "Initialize", MethodType.Normal)]
-        [HarmonyPatch(typeof(ScheduledAttackSystem), "Execute", MethodType.Normal)]
-
-        [HarmonyPostfix]
-
+		[HarmonyPatch(typeof(ScheduledAttackSystem), "Execute", MethodType.Normal)]
+		[HarmonyPostfix]
         static void Sas_fragment()
         {
-            foreach (CombatEntity projectile in Contexts.sharedInstance.combat.GetEntities(CombatMatcher.DataLinkSubsystemProjectile))
-            {
-                CombatContext combat = Contexts.sharedInstance.combat;
-                    Debug.Log("[1] - Context Shared Instance (combat): " + combat.ToString());
+			var trace = false;
+			var debugInfo = new List<(Func<int, int, object, string>, int, int, object)>();
 
-                EquipmentEntity part = IDUtility.GetEquipmentEntity(projectile.parentPart.equipmentID);
-                    Debug.Log("[2] - parent part: " + projectile.parentPart.equipmentID.ToString());
+			var combat = Contexts.sharedInstance.combat;
+			debugInfo.Add((ReportCombatContext, 0, 0, combat));
 
-                EquipmentEntity subsystem = IDUtility.GetEquipmentEntity(projectile.parentSubsystem.equipmentID);
-                    Debug.Log("[3] - parent subsystem: " + projectile.parentSubsystem.equipmentID.ToString());
+			var projectiles = Contexts.sharedInstance.combat.GetEntities(CombatMatcher.DataLinkSubsystemProjectile);
+			for (var i = 0; i < projectiles.Length; i += 1)
+			{
+				var projectile = projectiles[i];
 
-                DataContainerSubsystem blueprint = subsystem.dataLinkSubsystem.data;
-                    Debug.Log("[4] - Blueprint: " + blueprint.ToString());
+				if (projectile.isDestroyed)
+				{
+					continue;
+				}
 
-                var fragmentDelayFound = blueprint.TryGetFloat("fragment_delay", out float fragmentDelay, 0);
-                    Debug.Log("[5] - Fragment Delay: " + fragmentDelayFound.ToString());
+				if (projectile.hasProjectileDestructionPosition)
+				{
+					// Projectile has been triggered but not destroyed yet.
+					continue;
+				}
 
-                var fragmentKeyFound = blueprint.TryGetString("fragment_key", out string fragmentKey, null);
-                    Debug.Log("[6] - Fragment Key: " + fragmentKeyFound.ToString());
+				if (!projectile.hasPosition)
+				{
+					// Must have a position to know where the fragments start.
+					continue;
+				}
 
-                Vector3 bodyAssetScale = Vector3.one.normalized;
-                    Debug.Log("[7] - BodyAssetScale(x,y,z): " + bodyAssetScale.ToString());
+				if (!projectile.hasAuthoritativeRigidbody)
+				{
+					// No rigidbody --> not a guided projectile
+					continue;
+				}
 
-                DataContainerSubsystem fragmentBlueprint = DataMultiLinkerSubsystem.GetEntry(fragmentKey);
-                    Debug.Log("[8] - fragmentBlueprint | " + fragmentBlueprint.ToString());
+				var rigidbody = projectile.authoritativeRigidbody?.rb;
+				if (rigidbody == null)
+				{
+					// Defensive programming: component exists so someone stuffed a null.
+					continue;
+				}
 
-                DataBlockSubsystemProjectile_V2 projectileData = fragmentBlueprint.projectileProcessed;
-                    Debug.Log("[9] - projectileData | " + projectileData.ToString());
+				var speed = rigidbody.velocity.magnitude;
+				var targetPosition = GetTargetPosition(projectile, speed);
 
-                //ONLY FOR TESTING PURPOSE.
-                //var stat = DataHelperStats.GetCachedStatForPart(UnitStats.weaponConcussion, part);
+				var part = IDUtility.GetEquipmentEntity(projectile.parentPart.equipmentID);
+				debugInfo.Add((ReportPart, i, 0, part));
 
-                if (fragmentDelayFound && fragmentKeyFound)
-                {
-                    if (projectile.flightInfo.time > fragmentDelay)
-                    {
-                        //Destroy the projectile.
-                        //projectile.TriggerProjectile();
+				var subsystem = IDUtility.GetEquipmentEntity(projectile.parentSubsystem.equipmentID);
+				debugInfo.Add((ReportSubsystem, i, 0, subsystem));
 
-                        CombatEntity projectileNew = combat.CreateEntity();
-                        
+				var blueprint = subsystem.dataLinkSubsystem.data;
+				debugInfo.Add((ReportBlueprint, i, 0, blueprint));
 
-                        //Experimental: cloning missiles.
-                        for (var totalNum = 0; totalNum < 10; totalNum += 4)
-                        {
-                            AssetPoolUtility.AttachInstance(projectile.assetKey.key, projectile, true);
+				var fragmentDelayFound = blueprint.TryGetFloat("fragment_delay", out var fragmentDelay, 0);
+				debugInfo.Add((ReportFragmentDelay, i, 0, (fragmentDelayFound, fragmentDelay)));
+				if (!fragmentDelayFound)
+				{
+					continue;
+				}
+				if (projectile.flightInfo.time < fragmentDelay)
+				{
+					continue;
+				}
 
-                            if (projectileNew.HasComponent(248))
-                            {
-                                projectileNew.ReplaceDataLinkSubsystemProjectile(projectileData);
-                                Debug.Log("[11] - Projectile Data Link (root) added! - result | " + " ProjectileData: " + projectileData.ToString());
-                            }
-                            else
-                            {
-                                Debug.Log("[11] - Projectile Data Link (root) not added");
-                            }
+				var fragmentCountFound = blueprint.TryGetInt("fragment_count", out var fragmentCount, 0);
+				debugInfo.Add((ReportFragmentCount, i, 0, (fragmentCountFound, fragmentCount)));
+				if (!fragmentCountFound)
+				{
+					continue;
+				}
 
-                            if (projectileNew.HasComponent(112))
-                            {
-                                projectileNew.ReplaceParentPart(part.id.id);
-                                Debug.Log("[12] - parent part (root) added | value: " + projectileNew.parentPart.equipmentID.ToString() + "(" + part.id.id.ToString() + ")");
-                            }
-                            else
-                            {
-                                Debug.Log("[12] - parent part (root) not added");
-                            }
+				var fragmentKeyFound = blueprint.TryGetString("fragment_key", out var fragmentKey, null);
+				debugInfo.Add((ReportFragmentKey, i, 0, (fragmentKeyFound, fragmentKey)));
+				if (!fragmentKeyFound)
+				{
+					continue;
+				}
 
-                            if (projectile.HasComponent(113))
-                            {
-                                projectile.ReplaceParentSubsystem(subsystem.id.id);
-                                Debug.Log("[13] - parent subsystem (root) added | value: " + projectile.parentSubsystem.equipmentID.ToString() + "(" + subsystem.id.id.ToString() + ")");
-                            }
-                            else
-                            {
-                                Debug.Log("[13] - parent subsystem (root) not added | value: " + projectile.parentSubsystem.equipmentID.ToString() + "(" + subsystem.id.id.ToString() + ")");
-                            }
+				var fragmentHardpointFound = blueprint.TryGetString("fragment_hardpoint", out var fragmentHardpoint, null);
+				debugInfo.Add((ReportFragmentHardpoint, i, 0, (fragmentHardpointFound, fragmentHardpoint)));
+				if (!fragmentKeyFound)
+				{
+					continue;
+				}
 
-                            if (projectile.hasLevel)
-                            {
-                                projectile.ReplaceLevel(projectile.level.i);
-                                Debug.Log("[18] - Projectile level added | value: " + projectile.level.i.ToString());
-                            }
-                            else
-                            {
-                                Debug.Log("[18] - Projectile level not added");
-                            }
+				var bodyAssetScale = Vector3.one.normalized;
+				debugInfo.Add((ReportBodyAssetScale, i, 0, bodyAssetScale));
 
-                            if (projectile.hasProjectileCollision)
-                            {
-                                projectile.ReplaceProjectileCollision(LayerMasks.projectileMask, 1f);
-                                Debug.Log("[19] - Projectile collision added | value: " + LayerMasks.projectileMask);
-                            }
-                            else
-                            {
-                                Debug.Log("[19] - Projectile collision not added");
-                            }
+				var presetMirv = DataMultiLinkerPartPreset.GetEntry(fragmentKey);
+				debugInfo.Add((ReportPresetMirv, i, 0, presetMirv));
+				if (presetMirv == null)
+				{
+					continue;
+				}
 
-                            if (projectile.hasInflictedDamage)
-                            {
-                                projectile.ReplaceInflictedDamage(1.0f);
-                                Debug.Log("[20] - InflictedDamage added | value: " + projectile.inflictedDamage.f.ToString());
-                            }
-                            else
-                            {
-                                Debug.Log("[20] - InflictedDamage not added");
-                            }
+				var level = projectile.hasLevel ? projectile.level.i : 1;
+				var partMirv = UnitUtilities.CreatePartEntityFromPreset(presetMirv, level: level);
+				debugInfo.Add((ReportPartMirv, i, 0, partMirv));
+				if (partMirv == null)
+				{
+					continue;
+				}
 
-                            if (projectile.hasProjectileTargetPosition)
-                            {
-                                projectile.ReplaceProjectileTargetPosition(projectile.projectileTargetPosition.v.normalized);
-                                Debug.Log("[21] - ProjectileTargetPosition added | value: " + projectile.projectileGuidanceTargetPosition.v.normalized.ToString());
-                            }
-                            else
-                            {
-                                Debug.Log("[21] - ProjectileTargetPosition not added");
-                            }
+				var subsystemMirv = EquipmentUtility.GetSubsystemInPart(partMirv, fragmentHardpoint);
+				debugInfo.Add((ReportSubsystemMirv, i, 0, subsystemMirv));
+				if (subsystemMirv == null)
+				{
+					continue;
+				}
+				if (!subsystemMirv.hasDataLinkSubsystem)
+				{
+					continue;
+				}
 
-                            if (projectile.HasComponent(141))
-                            {
-                                projectile.ReplaceProjectileGuidanceTargetPosition(projectile.projectileGuidanceTargetPosition.v.normalized);
-                                Debug.Log("[22] - ProjectileGuidanceTargetPosition added | value: " + projectile.projectileGuidanceTargetPosition.v.normalized.ToString());
-                            }
-                            else
-                            {
-                                Debug.Log("[22] ProjectileGuidanceTargetPosition not added");
-                            }
+				var fragmentBlueprint = subsystemMirv.dataLinkSubsystem.data;
+				debugInfo.Add((ReportFragmentBlueprint, i, 0, fragmentBlueprint));
 
+				var projectileData = fragmentBlueprint.projectileProcessed;
+				debugInfo.Add((ReportProjectileData, i, 0, projectileData));
 
-                            if (projectile.hasMovementSpeedCurrent)
-                            {
-                                projectile.ReplaceMovementSpeedCurrent(3f);
-                                Debug.Log("[23] - MovementSpeedCurrent added | value: " + projectile.movementSpeedCurrent.f.ToString());
-                            }
-                            else
-                            {
-                                Debug.Log("[23] - MovementSpeedCurrent not added");
-                            }
+				// This statement can be moved around depending on how often you want to trace.
+				// With the statement here, only when we find suitable projectiles will the code
+				// write the trace to the log.
+				trace = true;
 
-                            if (projectile.hasRicochetChance)
-                            {
-                                projectile.ReplaceRicochetChance(0.5f);
-                                Debug.Log("[24] - RicochetChance added | value: " + projectile.ricochetChance.f.ToString());
-                            }
-                            else
-                            {
-                                Debug.Log("[24] - RicochetChance not added");
-                            }
+				for (var n = 0; n < fragmentCount; n += 1)
+				{
+					// When ScheduledAttackSystem.ProcessProjectiles() creates a new projectile,
+					// will create a new CombatEntity and assign a number of properties (components) to
+					// it and then call AddInflictedDamageComponents() followed by
+					// AttachTypeSpecificProjectileData().
 
-                            if (projectile.hasFlightInfo)
-                            {
-                                projectile.ReplaceFlightInfo(2f, 1f, projectile.flightInfo.origin.normalized, projectile.previousPosition.v.normalized);
-                                Debug.Log("[25] - FlightInfo added | value: " + projectile.projectileStartPosition.v.ToString() + ", " + projectile.projectileStartPosition.v.ToString());
-                            }
-                            else
-                            {
-                                Debug.Log("[25] - FlightInfo not added");
-                            }
+					var projectileNew = combat.CreateEntity();
+					ScheduledAttackSystem.AddInflictedDamageComponents(partMirv, projectileNew);
+					ScheduledAttackSystem.AttachGuidedProjectileData(
+						projectileNew,
+						projectile,
+						partMirv,
+						projectileData,
+						projectile.position.v,
+						rigidbody.transform.forward,
+						rigidbody.velocity.magnitude,
+						projectile.projectileGuidanceTargetPosition.v);
 
-                            if (projectile.SimpleMovement)
-                            {
-                                projectile.SimpleMovement = true;
-                                Debug.Log("[26] - SimpleMovement: " + projectile.SimpleMovement.ToString());
-                            }
-                            else
-                            {
-                                Debug.Log("[26] - SimpleMovement: " + projectile.SimpleMovement.ToString());
-                            }
+					if (projectile.hasFlightInfo)
+					{
+						projectileNew.ReplaceFlightInfo(
+							projectile.flightInfo.time,
+							projectile.flightInfo.distance,
+							projectileNew.flightInfo.origin,
+							projectileNew.flightInfo.positionLast);
+					}
 
-                            if (projectile.SimpleFaceMotion)
-                            {
-                                projectile.SimpleFaceMotion = true;
-                                Debug.Log("[27] - SimpleFaceMotion: " + projectile.SimpleFaceMotion.ToString());
-                            }
-                            else
-                            {
-                                Debug.Log("[27] - SimpleFaceMotion: " + projectile.SimpleFaceMotion.ToString());
-                            }
+					// The following assignments are in the same order as in ScheduledAttackSystem.ProcessProjectiles()
+					// but a few properties are missing: isDamageSplash, isImpactSplash, isDamageDispersed,
+					// isProjectileProximityFuse, isProjectileFalloffAnimated. These are booleans that are
+					// easily added if necessary.
 
-                            if (projectile.hasPosition)
-                            {
-                                projectile.ReplacePosition(projectile.position.v.normalized);
-                                Debug.Log("[28] - ProjectilePosition added | value: " + projectile.position.v.normalized.ToString());
-                            }
-                            else
-                            {
-                                Debug.Log("[28] - ProjectilePosition not added");
-                            }
+					projectileNew.ReplaceDataLinkSubsystemProjectile(projectileData);
+					projectileNew.ReplaceParentPart(partMirv.id.id);
+					projectileNew.ReplaceParentSubsystem(subsystemMirv.id.id);
 
-                            if (projectile.hasRotation)
-                            {
-                                projectile.ReplaceRotation(projectile.rotation.q);
-                                Debug.Log("[29] - ProjectileRotation added | value: " + projectile.rotation.q.ToString());
-                            }
-                            else
-                            {
-                                Debug.Log("[29] - ProjectileRotation not added");
-                            }
+					if (projectile.hasScale)
+					{
+						projectileNew.ReplaceScale(projectile.scale.v);
+					}
 
-                            if (projectile.hasFacing)
-                            {
-                                projectile.ReplaceFacing(projectile.facing.v);
-                                Debug.Log("[30] - Facing added | value: " + projectile.facing.v.ToString());
-                            }
-                            else
-                            {
-                                Debug.Log("[30] - Facing not added");
-                            }
+					if (projectile.hasLevel)
+					{
+						projectileNew.ReplaceLevel(projectile.level.i);
+					}
 
-                            if (projectile.hasSourceEntity)
-                            {
-                                projectile.ReplaceSourceEntity(projectile.sourceEntity.combatID);
-                                Debug.Log("[31] - SourceEntity (parentAction) Added | Parent Action: " + projectile.sourceEntity.combatID.ToString());
-                            }
-                            else
-                            {
-                                Debug.Log("[31] - SourceEntity (parentAction) not Added");
-                            }
+					if (projectile.hasPosition)
+					{
+						projectileNew.ReplacePosition(projectile.position.v.normalized);
+					}
 
-                            if (projectile.hasTimeToLive)
-                            {
-                                projectile.ReplaceTimeToLive(projectile.timeToLive.f);
-                                Debug.Log("[32] - HasTimeToLive Added | value: " + projectile.timeToLive.f.ToString());
-                            }
-                            else
-                            {
-                                Debug.Log("[32] - HasTimeToLive Not Added");
-                            }
+					if (projectile.hasRotation)
+					{
+						projectileNew.ReplaceRotation(projectile.rotation.q);
+					}
 
-                        }
+					if (projectile.hasFacing)
+					{
+						projectileNew.ReplaceFacing(projectile.facing.v);
+					}
 
-                        Debug.Log("[!!!THE END!!!] It works! -");
-                    }
-                }
-            }
-        }
-    }
+					if (projectile.hasTimeToLive)
+					{
+						projectileNew.ReplaceTimeToLive(projectile.timeToLive.f);
+					}
+
+					if (projectile.hasProjectileCollision)
+					{
+						projectileNew.ReplaceProjectileCollision(LayerMasks.projectileMask, projectile.projectileCollision.radius);
+					}
+
+					if (projectile.hasSourceEntity)
+					{
+						projectileNew.ReplaceSourceEntity(projectile.sourceEntity.combatID);
+					}
+
+					if (projectile.hasProjectileTargetEntity)
+					{
+						projectileNew.ReplaceProjectileTargetEntity(projectile.projectileTargetEntity.combatID);
+					}
+
+					if (projectile.hasProjectileTargetPosition)
+					{
+						projectileNew.ReplaceProjectileTargetPosition(projectile.projectileTargetPosition.v.normalized);
+					}
+
+					if (projectile.hasProjectileIndex)
+					{
+						projectileNew.ReplaceProjectileIndex(projectile.projectileIndex.i);
+					}
+
+					// MovementSpeedCurrent, FlightInfo, RicochetChange, SimpleMovement, SimpleFaceMotion appear
+					// to be used with only ballistic projectiles.
+
+					if (projectile.hasMovementSpeedCurrent)
+					{
+						projectileNew.ReplaceMovementSpeedCurrent(3f);
+					}
+
+					if (projectile.hasRicochetChance)
+					{
+						projectileNew.ReplaceRicochetChance(0.5f);
+					}
+
+					projectileNew.SimpleMovement = projectile.SimpleMovement;
+					projectileNew.SimpleFaceMotion = projectile.SimpleFaceMotion;
+
+					AssetPoolUtility.AttachInstance(projectile.assetKey.key, projectileNew, true);
+
+					if (trace)
+					{
+						debugInfo.Add((ReportCloneFlightInfo, i, n, (projectile.hasFlightInfo, projectileNew)));
+						debugInfo.Add((ReportCloneProjectileData, i, n, (true, projectileData)));
+						debugInfo.Add((ReportCloneParentPart, i, n, (true, projectileNew, partMirv)));
+						debugInfo.Add((ReportCloneParentSubsystem, i, n, (true, projectileNew, subsystemMirv)));
+						debugInfo.Add((ReportCloneScale, i, n, (projectile.hasScale, projectileNew)));
+						debugInfo.Add((ReportCloneLevel, i, n, (projectile.hasLevel, projectileNew)));
+						debugInfo.Add((ReportClonePosition, i, n, (projectile.hasPosition, projectileNew)));
+						debugInfo.Add((ReportCloneRotation, i, n, (projectile.hasRotation, projectileNew)));
+						debugInfo.Add((ReportCloneFacing, i, n, (projectile.hasFacing, projectileNew)));
+						debugInfo.Add((ReportCloneTimeToLive, i, n, (projectile.hasTimeToLive, projectileNew)));
+						debugInfo.Add((ReportCloneProjectileCollision, i, n, (projectile.hasProjectileCollision, LayerMasks.projectileMask)));
+						debugInfo.Add((ReportCloneSourceEntity, i, n, (projectile.hasSourceEntity, projectileNew)));
+						debugInfo.Add((ReportCloneProjectileTargetEntity, i, n, (projectile.hasProjectileTargetEntity, projectileNew)));
+						debugInfo.Add((ReportCloneProjectileTargetPosition, i, n, (projectile.hasProjectileTargetPosition, projectileNew)));
+						debugInfo.Add((ReportCloneProjectileIndex, i, n, (projectile.hasProjectileIndex, projectileNew)));
+						debugInfo.Add((ReportCloneInflictedDamage, i, n, (projectile.hasInflictedDamage, 1.0f)));
+						debugInfo.Add((ReportCloneMovementSpeedCurrent, i, n, (projectile.hasMovementSpeedCurrent, projectileNew)));
+						debugInfo.Add((ReportCloneRicochetChance, i, n, (projectile.hasRicochetChance, projectileNew)));
+						debugInfo.Add((ReportCloneSimpleMovement, i, n, projectileNew.SimpleMovement));
+						debugInfo.Add((ReportCloneSimpleFaceMotion, i, n, projectileNew.SimpleFaceMotion));
+					}
+
+					CombatReplayHelper.OnProjectileTransform(projectileNew, true);
+				}
+
+				DestroyProjectile(projectile);
+			}
+
+			if (trace)
+			{
+				Report(debugInfo);
+				Debug.Log("[!!!THE END!!!] It works! -");
+			}
+		}
+	}
 }
