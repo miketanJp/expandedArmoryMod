@@ -323,9 +323,16 @@ projectile:
 beam: 
 custom:
   ints:
-    fragment_count: 3
+    fragment_count: 23
   floats:
     fragment_delay: 1
+    fragment_scatter_angle: 60
   strings:
     fragment_key: wpn_ml_mirv_01
     fragment_hardpoint: internal_main_equipment
+    fragment_fanout: starburst
+  vectors:
+    fragment_scale:
+      x: 0.5
+      y: 0.5
+      z: 0.65
