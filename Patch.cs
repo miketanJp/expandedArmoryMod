@@ -10,9 +10,26 @@ using System.Collections.Generic;
 
 namespace fragmentMod
 {
-    [HarmonyPatch]
+	using FanoutFunc = Func<Vector3, float, int, int, Vector3>;
+
+	[HarmonyPatch]
     public partial class Patch
     {
+		private static readonly Dictionary<string, FanoutFunc> fanouts = new Dictionary<string, FanoutFunc>()
+		{
+			["circular"] = CircularFanout,
+			["umbrella"] = UmbrellaFanout,
+			["starburst"] = StarburstFanout,
+
+			// Test patterns
+			["horizontal"] = HorizontalFanout,
+			["vertical"] = VerticalFanout,
+			["left_diagonal"] = LeftDiagonalFanout,
+			["right_diagonal"] = RightDiagonalFanout,
+			["cross"] = CrossFanout,
+			["tee"] = TeeFanout,
+		};
+
 		[HarmonyPatch(typeof(ScheduledAttackSystem), "Execute", MethodType.Normal)]
 		[HarmonyPostfix]
         static void Sas_fragment()
@@ -87,6 +104,10 @@ namespace fragmentMod
 				{
 					continue;
 				}
+				if (fragmentCount <= 0)
+				{
+					continue;
+				}
 
 				var fragmentKeyFound = blueprint.TryGetString("fragment_key", out var fragmentKey, null);
 				debugInfo.Add((ReportFragmentKey, i, 0, (fragmentKeyFound, fragmentKey)));
@@ -97,13 +118,17 @@ namespace fragmentMod
 
 				var fragmentHardpointFound = blueprint.TryGetString("fragment_hardpoint", out var fragmentHardpoint, null);
 				debugInfo.Add((ReportFragmentHardpoint, i, 0, (fragmentHardpointFound, fragmentHardpoint)));
-				if (!fragmentKeyFound)
+				if (!fragmentHardpointFound)
 				{
 					continue;
 				}
 
-				var bodyAssetScale = Vector3.one.normalized;
-				debugInfo.Add((ReportBodyAssetScale, i, 0, bodyAssetScale));
+				var fragmentFanoutFound = blueprint.TryGetString("fragment_fanout", out var fragmentFanout, null);
+				if (!fragmentFanoutFound || !fanouts.TryGetValue(fragmentFanout, out var fanout))
+				{
+					// No fanout so all fragments start out clumped together.
+					fanout = (f, s, n, t) => f;
+				}
 
 				var presetMirv = DataMultiLinkerPartPreset.GetEntry(fragmentKey);
 				debugInfo.Add((ReportPresetMirv, i, 0, presetMirv));
@@ -137,6 +162,13 @@ namespace fragmentMod
 				var projectileData = fragmentBlueprint.projectileProcessed;
 				debugInfo.Add((ReportProjectileData, i, 0, projectileData));
 
+
+				var scatterAngleFromPart = DataHelperStats.GetCachedStatForPart("wpn_scatter_angle", partMirv);
+				blueprint.TryGetFloat("fragment_scatter_angle", out var scatterAngle, scatterAngleFromPart);
+				scatterAngle = Mathf.Max(0f, scatterAngle);
+
+				blueprint.TryGetVector("fragment_scale", out var scale, projectileData.visual.body.scale);
+
 				// This statement can be moved around depending on how often you want to trace.
 				// With the statement here, only when we find suitable projectiles will the code
 				// write the trace to the log.
@@ -144,64 +176,68 @@ namespace fragmentMod
 
 				for (var n = 0; n < fragmentCount; n += 1)
 				{
-					// When ScheduledAttackSystem.ProcessProjectiles() creates a new projectile,
-					// will create a new CombatEntity and assign a number of properties (components) to
-					// it and then call AddInflictedDamageComponents() followed by
-					// AttachTypeSpecificProjectileData().
-
 					var projectileNew = combat.CreateEntity();
-					ScheduledAttackSystem.AddInflictedDamageComponents(partMirv, projectileNew);
-					ScheduledAttackSystem.AttachGuidedProjectileData(
-						projectileNew,
-						projectile,
-						partMirv,
-						projectileData,
-						projectile.position.v,
-						rigidbody.transform.forward,
-						rigidbody.velocity.magnitude,
-						projectile.projectileGuidanceTargetPosition.v);
 
-					if (projectile.hasFlightInfo)
+					if (projectileData.falloff != null && projectileData.falloff.animated)
 					{
-						projectileNew.ReplaceFlightInfo(
-							projectile.flightInfo.time,
-							projectile.flightInfo.distance,
-							projectileNew.flightInfo.origin,
-							projectileNew.flightInfo.positionLast);
+						projectileNew.isProjectileFalloffAnimated = true;
 					}
 
-					// The following assignments are in the same order as in ScheduledAttackSystem.ProcessProjectiles()
-					// but a few properties are missing: isDamageSplash, isImpactSplash, isDamageDispersed,
-					// isProjectileProximityFuse, isProjectileFalloffAnimated. These are booleans that are
-					// easily added if necessary.
+					if (projectileData.fuseProximity != null)
+					{
+						projectileNew.isProjectileProximityFuse = true;
+					}
+
+					if (projectileData.splashDamage != null)
+					{
+						projectileNew.isDamageSplash = true;
+					}
+
+					if (projectileData.splashImpact != null)
+					{
+						projectileNew.isImpactSplash = true;
+						projectileNew.ImpactSplashOnDamage = projectileData.splashImpact.triggerOnDamage;
+					}
+
+					if (fragmentBlueprint.IsFlagPresent("damage_dispersed"))
+					{
+						projectileNew.isDamageDispersed = true;
+					}
+
+					var deactivateBeforeRange = projectileData.range != null && projectileData.range.deactivateBeforeRange;
+					projectileNew.isProjectilePrimed = !deactivateBeforeRange;
 
 					projectileNew.ReplaceDataLinkSubsystemProjectile(projectileData);
 					projectileNew.ReplaceParentPart(partMirv.id.id);
 					projectileNew.ReplaceParentSubsystem(subsystemMirv.id.id);
 
-					if (projectile.hasScale)
-					{
-						projectileNew.ReplaceScale(projectile.scale.v);
-					}
+					projectileNew.ReplaceScale(scale);
 
 					if (projectile.hasLevel)
 					{
 						projectileNew.ReplaceLevel(projectile.level.i);
 					}
 
+					var (position, rotation, facing) = Fanout(
+						projectile,
+						scatterAngle,
+						fanout,
+						n,
+						fragmentCount);
+
+					if (projectile.hasFacing)
+					{
+						projectileNew.ReplaceFacing(facing);
+					}
+
 					if (projectile.hasPosition)
 					{
-						projectileNew.ReplacePosition(projectile.position.v.normalized);
+						projectileNew.ReplacePosition(position);
 					}
 
 					if (projectile.hasRotation)
 					{
-						projectileNew.ReplaceRotation(projectile.rotation.q);
-					}
-
-					if (projectile.hasFacing)
-					{
-						projectileNew.ReplaceFacing(projectile.facing.v);
+						projectileNew.ReplaceRotation(rotation);
 					}
 
 					if (projectile.hasTimeToLive)
@@ -234,23 +270,32 @@ namespace fragmentMod
 						projectileNew.ReplaceProjectileIndex(projectile.projectileIndex.i);
 					}
 
-					// MovementSpeedCurrent, FlightInfo, RicochetChange, SimpleMovement, SimpleFaceMotion appear
-					// to be used with only ballistic projectiles.
-
-					if (projectile.hasMovementSpeedCurrent)
-					{
-						projectileNew.ReplaceMovementSpeedCurrent(3f);
-					}
-
-					if (projectile.hasRicochetChance)
-					{
-						projectileNew.ReplaceRicochetChance(0.5f);
-					}
-
-					projectileNew.SimpleMovement = projectile.SimpleMovement;
-					projectileNew.SimpleFaceMotion = projectile.SimpleFaceMotion;
-
 					AssetPoolUtility.AttachInstance(projectile.assetKey.key, projectileNew, true);
+					var assetLinker = projectileNew.hasAssetLink ? projectileNew.assetLink.instance : null;
+					if (projectileNew.isProjectilePrimed && assetLinker != null && assetLinker.fxHelperProjectile != null)
+					{
+						assetLinker.fxHelperProjectile.SetRange(1f);
+					}
+
+					ScheduledAttackSystem.AddInflictedDamageComponents(partMirv, projectileNew);
+					ScheduledAttackSystem.AttachGuidedProjectileData(
+						projectileNew,
+						projectile,
+						partMirv,
+						projectileData,
+						projectile.position.v,
+						facing,
+						rigidbody.velocity.magnitude,
+						projectile.projectileGuidanceTargetPosition.v);
+
+					if (projectile.hasFlightInfo)
+					{
+						projectileNew.ReplaceFlightInfo(
+							projectile.flightInfo.time,
+							projectile.flightInfo.distance,
+							projectileNew.flightInfo.origin,
+							projectileNew.flightInfo.positionLast);
+					}
 
 					if (trace)
 					{
@@ -270,10 +315,6 @@ namespace fragmentMod
 						debugInfo.Add((ReportCloneProjectileTargetPosition, i, n, (projectile.hasProjectileTargetPosition, projectileNew)));
 						debugInfo.Add((ReportCloneProjectileIndex, i, n, (projectile.hasProjectileIndex, projectileNew)));
 						debugInfo.Add((ReportCloneInflictedDamage, i, n, (projectile.hasInflictedDamage, 1.0f)));
-						debugInfo.Add((ReportCloneMovementSpeedCurrent, i, n, (projectile.hasMovementSpeedCurrent, projectileNew)));
-						debugInfo.Add((ReportCloneRicochetChance, i, n, (projectile.hasRicochetChance, projectileNew)));
-						debugInfo.Add((ReportCloneSimpleMovement, i, n, projectileNew.SimpleMovement));
-						debugInfo.Add((ReportCloneSimpleFaceMotion, i, n, projectileNew.SimpleFaceMotion));
 					}
 
 					CombatReplayHelper.OnProjectileTransform(projectileNew, true);

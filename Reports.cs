@@ -99,26 +99,6 @@ namespace fragmentMod
 			return "[28] - ProjectileTargetPosition not added";
 		}
 
-		private static string ReportCloneMovementSpeedCurrent(int i, int n, object o)
-		{
-			var v = (ValueTuple<bool, CombatEntity>)o;
-			if (v.Item1)
-			{
-				return string.Format("[30] - projectile {0} - fragment {1} - MovementSpeedCurrent added | value: {2}", i, n, v.Item2.movementSpeedCurrent.f);
-			}
-			return "[30] - MovementSpeedCurrent not added";
-		}
-
-		private static string ReportCloneRicochetChance(int i, int n, object o)
-		{
-			var v = (ValueTuple<bool, CombatEntity>)o;
-			if (v.Item1)
-			{
-				return string.Format("[31] - projectile {0} - fragment {1} - RicochetChance added | value: {2}", i, n, v.Item2.ricochetChance.f);
-			}
-			return "[31] - RicochetChance not added";
-		}
-
 		private static string ReportCloneFlightInfo(int i, int n, object o)
 		{
 			var v = (ValueTuple<bool, CombatEntity>)o;
@@ -128,9 +108,6 @@ namespace fragmentMod
 			}
 			return "[14] - FlightInfo not added";
 		}
-
-		private static string ReportCloneSimpleMovement(int i, int n, object o) => string.Format("[32] - projectile {0} - fragment {1} - SimpleMovement: {2}", i, n, o);
-		private static string ReportCloneSimpleFaceMotion(int i, int n, object o) => string.Format("[33] - projectile {0} - fragment {1} - SimpleFaceMotion: {2}", i, n, o);
 
 		private static string ReportClonePosition(int i, int n, object o)
 		{
@@ -157,7 +134,7 @@ namespace fragmentMod
 			var v = (ValueTuple<bool, CombatEntity>)o;
 			if (v.Item1)
 			{
-				return string.Format("[23] - projectile {0} - fragment {1} - Facing added | value: {2}", i, n, v.Item2.facing.v);
+				return string.Format("[23] - projectile {0} - fragment {1} - Facing added | value: {2}", i, n, v.Item2.facing.v.ToString("F2"));
 			}
 			return "[23] - Facing not added";
 		}

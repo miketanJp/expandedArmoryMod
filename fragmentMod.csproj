@@ -61,8 +61,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DestroyProjectile.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Patch.cs" />
     <Compile Include="ModLink.cs" />
+    <Compile Include="Fanout.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports.cs" />
     <Compile Include="TargetPosition.cs" />

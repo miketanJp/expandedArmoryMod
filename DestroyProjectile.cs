@@ -6,7 +6,6 @@
 		{
 			// Lifted from ProjectileUtility.TriggerProjectile()
 
-			projectile.isDestroyed = true;
 			if (projectile.hasProjectileCollision)
 			{
 				projectile.RemoveProjectileCollision();
@@ -42,6 +41,8 @@
 				projectile.assetLink.instance.Stop();
 				CombatReplayHelper.OnProjectileEnd(projectile);
 			}
+
+			projectile.isDestroyed = true;
 		}
 	}
 }
