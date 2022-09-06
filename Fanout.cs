@@ -67,14 +67,12 @@ namespace fragmentMod
 
 			var odd = totalFragments % 2 == 1;
 
-			// Back-roll the missile a quarter-turn before setting the roll angle for odd circles because 12 o'clock for
-			// `Vector3.forward` is horizontal right with the missile coming at you.
 			// Even circles are tipped because the 4-fragment ones look better with the fragments coming from the corners
 			// (cross) rather than the compass points (tee).
-			var roll = (odd ? -90 : 45) + n * 360 / totalFragments;
+			var roll = (odd ? 0 : 45) + n * 360 / totalFragments;
 
 			var pitch = -scatterAngle / 2f;
-			var orientation = Quaternion.AngleAxis(roll, Vector3.forward) * Quaternion.AngleAxis(pitch, Vector3.up);
+			var orientation = Quaternion.AngleAxis(roll, Vector3.forward) * Quaternion.AngleAxis(pitch, Vector3.right);
 			return Quaternion.LookRotation(facing) * orientation * Vector3.forward;
 		}
 
@@ -92,11 +90,9 @@ namespace fragmentMod
 
 		private static Vector3 TriangleFanout(Vector3 facing, float scatterAngle, int n)
 		{
-			// Back-roll the missile a quarter-turn before setting the roll angle because 12 o'clock for
-			// `Vector3.forward` is horizontal right with the missile coming at you.
-			var roll = -90 + n * 120f;
+			var roll = n * 120f;
 			var pitch = -scatterAngle / 2f;
-			var orientation = Quaternion.AngleAxis(roll, Vector3.forward) * Quaternion.AngleAxis(pitch, Vector3.up);
+			var orientation = Quaternion.AngleAxis(roll, Vector3.forward) * Quaternion.AngleAxis(pitch, Vector3.right);
 			return Quaternion.LookRotation(facing) * orientation * Vector3.forward;
 		}
 
@@ -161,7 +157,7 @@ namespace fragmentMod
 				roll -= 360f / fragmentsPerShell * 2f / fragmentsPerShell;
 			}
 			var pitch = -scatterAngle / Mathf.Pow(Mathf.Sqrt(2), shells - nshell) / 2f;
-			var orientation = Quaternion.AngleAxis(roll, Vector3.forward) * Quaternion.AngleAxis(pitch, Vector3.up);
+			var orientation = Quaternion.AngleAxis(roll, Vector3.forward) * Quaternion.AngleAxis(pitch, Vector3.right);
 			return Quaternion.LookRotation(facing) * orientation * Vector3.forward;
 		}
 
