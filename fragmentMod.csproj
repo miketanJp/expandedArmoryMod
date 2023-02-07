@@ -32,31 +32,37 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>Z:\Epic Games\Games\PhantomAlpha\PhantomBrigade_Data\Managed\0Harmony.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\Epic Games\PhantomBrigade\PhantomBrigade_Data\Managed\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>Z:\Epic Games\Games\PhantomAlpha\PhantomBrigade_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\Epic Games\PhantomBrigade\PhantomBrigade_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>Z:\Epic Games\Games\PhantomAlpha\PhantomBrigade_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\Epic Games\PhantomBrigade\PhantomBrigade_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="Entitas">
-      <HintPath>Z:\Epic Games\Games\PhantomAlpha\PhantomBrigade_Data\Managed\Entitas.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\Epic Games\PhantomBrigade\PhantomBrigade_Data\Managed\Entitas.dll</HintPath>
     </Reference>
     <Reference Include="Entitas.Unity">
-      <HintPath>Z:\Epic Games\Games\PhantomAlpha\PhantomBrigade_Data\Managed\Entitas.Unity.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\Epic Games\PhantomBrigade\PhantomBrigade_Data\Managed\Entitas.Unity.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
+    <Reference Include="Unity.Entities">
+      <HintPath>..\..\..\..\..\..\Program Files\Epic Games\PhantomBrigade\PhantomBrigade_Data\Managed\Unity.Entities.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>Z:\Epic Games\Games\PhantomAlpha\PhantomBrigade_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\Epic Games\PhantomBrigade\PhantomBrigade_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>Z:\Epic Games\Games\PhantomAlpha\PhantomBrigade_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\Epic Games\PhantomBrigade\PhantomBrigade_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>Z:\Epic Games\Games\PhantomAlpha\PhantomBrigade_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\Epic Games\PhantomBrigade\PhantomBrigade_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule">
+      <HintPath>..\..\..\..\..\..\Program Files\Epic Games\PhantomBrigade\PhantomBrigade_Data\Managed\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

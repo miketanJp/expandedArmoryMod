@@ -286,7 +286,8 @@ namespace fragmentMod
 						projectile.position.v,
 						facing,
 						rigidbody.velocity.magnitude,
-						projectile.projectileGuidanceTargetPosition.v);
+						projectile.projectileGuidanceTargetPosition.v,
+						addedVelocity: default);
 
 					if (projectile.hasFlightInfo)
 					{
