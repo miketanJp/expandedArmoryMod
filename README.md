@@ -44,3 +44,6 @@ In the moment I am writing this readme (2022-09-07), the only supported splittin
 ## Known issues
 - [ ] Missile ignition sound event persists after missile(s) destruction. https://github.com/miketanJp/fragmentMod/issues/4
 - [ ] Child Missiles' guidance towards map boundaries when force attack. https://github.com/miketanJp/fragmentMod/issues/5
+
+## Fixed issues
+- [x] Game broken when firing during combat. https://github.com/miketanJp/fragmentMod/issues/6
