@@ -255,15 +255,16 @@ namespace fragmentMod
 						projectileNew.ReplaceSourceEntity(projectile.sourceEntity.combatID);
 					}
 
-					if (projectile.hasProjectileTargetEntity)
+					if (!projectile.hasProjectileTargetEntity)
 					{
 						projectileNew.ReplaceProjectileTargetEntity(projectile.projectileTargetEntity.combatID);
-					}
+                    }
 
-					if (projectile.hasProjectileTargetPosition)
+                    if (projectile.hasProjectileTargetPosition)
 					{
-						projectileNew.ReplaceProjectileTargetPosition(projectile.projectileTargetPosition.v.normalized);
-					}
+						projectileNew.AddProjectileGuidanceTargetPosition(projectile.projectileGuidanceTargetPosition.v.normalized);
+                        projectileNew.ReplaceProjectileTargetPosition(projectile.projectileTargetPosition.v.normalized);
+                    }
 
 					if (projectile.hasProjectileIndex)
 					{
