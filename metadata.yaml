@@ -1,0 +1,12 @@
+id: PB_fragmentMod_original
+ver: 1.0.2
+includesConfigOverrides: true
+includesConfigEdits: false
+includesLibraries: true
+includesTextures: false
+includesLocalizationEdits: true
+includesLocalizations: false
+gameVersionMin: 
+gameVersionMax: 
+name: 'Fragment Mod - Original'
+desc: This mod enables a new kind of MIRV-Like Missile Launcher. -THE ORIGINAL-
