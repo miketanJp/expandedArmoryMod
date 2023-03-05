@@ -1,12 +1,11 @@
-﻿using UnityEngine;
+﻿using Entitas;
 using HarmonyLib;
-using Entitas;
 using PhantomBrigade;
-using PhantomBrigade.Data;
 using PhantomBrigade.Combat.Systems;
-
+using PhantomBrigade.Data;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace fragmentMod
 {
@@ -20,14 +19,6 @@ namespace fragmentMod
 			["circular"] = CircularFanout,
 			["umbrella"] = UmbrellaFanout,
 			["starburst"] = StarburstFanout,
-
-			// Test patterns
-			["horizontal"] = HorizontalFanout,
-			["vertical"] = VerticalFanout,
-			["left_diagonal"] = LeftDiagonalFanout,
-			["right_diagonal"] = RightDiagonalFanout,
-			["cross"] = CrossFanout,
-			["tee"] = TeeFanout,
 		};
 
 		[HarmonyPatch(typeof(ScheduledAttackSystem), "Execute", MethodType.Normal)]
@@ -37,10 +28,11 @@ namespace fragmentMod
 			var trace = false;
 			var debugInfo = new List<(Func<int, int, object, string>, int, int, object)>();
 
-			var combat = Contexts.sharedInstance.combat;
+			var combat = Contexts.sharedInstance.combat; 
 			debugInfo.Add((ReportCombatContext, 0, 0, combat));
 
 			var projectiles = Contexts.sharedInstance.combat.GetEntities(CombatMatcher.DataLinkSubsystemProjectile);
+
 			for (var i = 0; i < projectiles.Length; i += 1)
 			{
 				var projectile = projectiles[i];
@@ -255,18 +247,36 @@ namespace fragmentMod
 						projectileNew.ReplaceSourceEntity(projectile.sourceEntity.combatID);
 					}
 
-					if (!projectile.hasProjectileTargetEntity)
-					{
-						projectileNew.ReplaceProjectileTargetEntity(projectile.projectileTargetEntity.combatID);
-                    }
+                    
+                    if (projectile.hasProjectileTargetEntity)
+                    {
+						projectileNew.AddProjectileTargetEntity(projectile.projectileTargetEntity.combatID);
 
+						if (projectile.hasProjectileTargetEntity)
+						{
+                            projectileNew.ReplaceProjectileTargetEntity(projectile.projectileTargetEntity.combatID);
+                        }
+
+					}
+
+                    // In v1.0, the mod will not detect this component for whatever reason.
+					// We try to get the missing component by recreating it, then replacing as originally intended.
+					// Continue statement is used to prevent the mod from breaking up the game.
                     if (projectile.hasProjectileTargetPosition)
-					{
-						projectileNew.AddProjectileGuidanceTargetPosition(projectile.projectileGuidanceTargetPosition.v.normalized);
-                        projectileNew.ReplaceProjectileTargetPosition(projectile.projectileTargetPosition.v.normalized);
+                    {
+                        projectileNew.AddProjectileTargetPosition(projectile.projectileTargetPosition.v.normalized);
+
+                        if (projectile.hasProjectileTargetPosition)
+                        {
+                            projectileNew.ReplaceProjectileTargetPosition(projectile.projectileTargetPosition.v.normalized);
+                        }
+
+                    } else
+                    {
+                        continue;
                     }
 
-					if (projectile.hasProjectileIndex)
+                    if (projectile.hasProjectileIndex)
 					{
 						projectileNew.ReplaceProjectileIndex(projectile.projectileIndex.i);
 					}
@@ -322,8 +332,9 @@ namespace fragmentMod
 					CombatReplayHelper.OnProjectileTransform(projectileNew, true);
 				}
 
-				DestroyProjectile(projectile);
-			}
+                    DestroyProjectile(projectile);
+				
+            }
 
 			if (trace)
 			{
