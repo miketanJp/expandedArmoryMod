@@ -9,7 +9,7 @@ namespace fragmentMod
 {
 	public partial class Patch
 	{
-		private static void Report(List<(Func<int, int, object, string>, int, int, object)> debugInfo)
+		private static void Report(Queue<(Func<int, int, object, string>, int, int, object)> debugInfo)
 		{
 			Debug.Log(string.Join("\n", debugInfo.Select(x => x.Item1(x.Item2, x.Item3, x.Item4))));
 		}
@@ -94,7 +94,7 @@ namespace fragmentMod
 			var v = (ValueTuple<bool, CombatEntity>)o;
 			if (v.Item1)
 			{
-				return string.Format("[28] - projectile {0} - fragment {1} - ProjectileTargetPosition added | value: {2}", i, n, v.Item2.projectileGuidanceTargetPosition.v.normalized);
+				return string.Format("[28] - projectile {0} - fragment {1} - ProjectileTargetPosition added | value: {2}", i, n, v.Item2.projectileGuidanceTargetPosition.v);
 			}
 			return "[28] - ProjectileTargetPosition not added";
 		}
