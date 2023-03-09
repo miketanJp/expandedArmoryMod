@@ -1,4 +1,4 @@
-## fragmentMod
+## MIRV Missile (AKA FragmentMod)
 The present mod is a library mod for [Phantom Brigade](https://braceyourselfgames.com/phantom-brigade/), a Hybrid Turn-based strategy game by [Brace Yourself Games](https://braceyourselfgames.com).+
 
 The main purpose of this mod is to introduce [MIRV Missiles](https://en.wikipedia.org/wiki/Multiple_independently_targetable_reentry_vehicle) with different splitting patterns to choose from. Actually, wareheads are not yet truly independent as they still track and strike one or more targets around it.
