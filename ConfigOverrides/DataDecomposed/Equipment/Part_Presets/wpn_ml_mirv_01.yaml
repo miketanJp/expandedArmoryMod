@@ -1,0 +1,34 @@
+hidden: false
+parents:
+- key: wpn_ml_primary
+livery: 
+ratingRange: 
+comment: 
+textName:
+  split: true
+textDesc:
+  split: true
+textNameFromRating:
+textDescFromRating:
+sockets:
+tags:
+- branch_army
+- branch_experimental
+- branch_reserves
+- branch_specops
+- difficulty_medium
+- part_mirv
+- range_long
+- range_medium
+genSteps:
+- !AddHardpoints
+  subsystemsInitial:
+  - wpn_main_ml_mirv_01
+  - wpn_main_ml_primary_05
+  pickRandom: false
+  hardpointsTargeted:
+  - internal_main_equipment
+  priority: 100
+  comment: 
+    comment: 'Very simple equipment generator step - insert the main subsystem responsible for weapon visuals and stats'
+  checks:
