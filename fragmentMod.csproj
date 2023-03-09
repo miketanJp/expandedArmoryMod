@@ -48,7 +48,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml" />
     <Reference Include="Unity.Entities">
       <HintPath>Z:\Epic Games\Games\PhantomBrigade\PhantomBrigade_Data\Managed\Unity.Entities.dll</HintPath>
     </Reference>
