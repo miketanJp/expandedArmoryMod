@@ -1,6 +1,6 @@
 hidden: true
 parents:
-- key: wpn_root_primary
+- key: wpn_root_primary_mirv
 - key: wpn_perk_filter_guided
 livery: 
 ratingRange: 

@@ -1,38 +1,35 @@
 hidden: false
-parent: wpn_main_ml_mirv
+parent: wpn_main_ml_sidearm
 rating: 1
 textNameFromPreset: 
 textNameFromHardpoint: 
 textName: 
-  split: true
 textDescFromPreset: 
 textDesc: 
-  split: true
 hardpoints: 
 tags:
 - mnf_01
 - spec_stabilized
 - stat_concussive
-- category_wpn_mirv
 statDistribution: ''
 stats:
   act_count:
-    value: 3
+    value: 6
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   act_duration:
-    value: 2.1
+    value: 2.25
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   act_heat:
-    value: 145
+    value: 130
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   mass:
-    value: 8
+    value: 4
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
@@ -42,76 +39,76 @@ stats:
     targetSocket: ''
     targetHardpoint: ''
   wpn_concussion:
-    value: 3.634393
+    value: 1.677412
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_damage:
-    value: 95
+    value: 16
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_damage_radius:
-    value: 2
+    value: 3
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_impact:
-    value: 100
+    value: 35
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_impact_radius:
-    value: 2
+    value: 5
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_proj_lifetime:
-    value: 10
+    value: 6
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_range_max:
-    value: 200
+    value: 300
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_range_min:
-    value: 115
+    value: 50
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_scatter_angle:
-    value: 10
+    value: 30
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_scatter_angle_moving:
-    value: 10
+    value: 30
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_scatter_radius:
-    value: 1
+    value: 0
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_speed:
-    value: 20
+    value: 25
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
 visuals:
-- part_wpn_missile_02_back_c
-- part_wpn_missile_02_bottom_b
-- part_wpn_missile_02_front_i
-- part_wpn_missile_02_top_b
+- wpn_missile_01b_back_a
+- wpn_missile_01b_bottom_a
+- wpn_missile_01b_front_b
+- wpn_missile_01b_top_a
 activation:
   visual:
     local:
       factionUsed: true
-      key: fx_muzzle_launcher_02_blue
-      keyEnemy: fx_muzzle_launcher_02_red
+      key: fx_muzzle_launcher_03_blue
+      keyEnemy: fx_muzzle_launcher_03_red
       scale: &o0
         x: 1
         y: 1
@@ -131,8 +128,8 @@ projectile:
   visual:
     body:
       factionUsed: true
-      key: fx_projectile_missile_01_regular_blue
-      keyEnemy: fx_projectile_missile_01_regular_red
+      key: fx_projectile_missile_01_small_blue
+      keyEnemy: fx_projectile_missile_01_small_red
       scale: *o0
     impact:
       factionUsed: false
@@ -159,7 +156,7 @@ projectile:
     distance: 3
   splashDamage:
     exponent: 2
-    fxDetonation: fx_aoe_explosion_01_medium
+    fxDetonation: fx_aoe_explosion_01_small
     fxArea: fx_aoe_volume_01
     fxHit: fx_aoe_hit_01
   splashImpact:
@@ -168,13 +165,13 @@ projectile:
   guidanceData:
     rigidbodyMass: 1
     rigidbodyDrag: 2.1
-    rigidbodyAngularDrag: 8
-    driverSteeringForce: 20
-    driverPitchForce: 30
-    driverAccelerationForce: 64
+    rigidbodyAngularDrag: 7
+    driverSteeringForce: 12
+    driverPitchForce: 18
+    driverAccelerationForce: 100
     driverAccelerationMin: 1
     inputProgressFromTarget: true
-    inputTargetHeightScale: 4
+    inputTargetHeightScale: 3
     inputTargetOffsetPower: 1
     steeringPID:
       proportionalGain: 7
@@ -204,40 +201,8 @@ projectile:
         modePreWrap: ClampForever
         keys:
         - tv_tg:
-            x: 0.07751939
-            y: 0
-            z: 0.0552199
-            w: 0.0552199
-          w:
             x: 0
-            y: 0.373413
-          m: *o1
-        - tv_tg:
-            x: 0.5469753
-            y: 1
-            z: 0.1276048
-            w: 0.1276048
-          w:
-            x: 0.3333333
-            y: 1
-          m: *o1
-        - tv_tg:
-            x: 1
-            y: 1
-            z: 0.6718754
-            w: 0.6718754
-          w:
-            x: 0.2258719
             y: 0
-          m: *o1
-    inputTargetUpdate: !DataBlockGuidanceInputCurve
-      curve:
-        modePostWrap: ClampForever
-        modePreWrap: ClampForever
-        keys:
-        - tv_tg:
-            x: 0
-            y: 1
             z: 0
             w: 0
           w: &o2
@@ -245,18 +210,17 @@ projectile:
             y: 0
           m: *o1
         - tv_tg:
-            x: 0.888373
+            x: 0.437175
             y: 1
             z: 0
             w: 0
-          w: &o3
-            x: 0.3333333
-            y: 0.3333333
+          w: *o2
           m: *o1
+    inputTargetUpdate: !DataBlockGuidanceInputConstant
+      value: 1
     inputTargetOffset: !DataBlockGuidanceInputConstant
       value: 1
-    inputSteering: !DataBlockGuidanceInputConstant
-      value: 1
+    inputSteering: 
     inputThrottle: !DataBlockGuidanceInputCurve
       curve:
         modePostWrap: ClampForever
@@ -264,32 +228,32 @@ projectile:
         keys:
         - tv_tg:
             x: 0
-            y: 0.5937493
+            y: 0.375
             z: 0
             w: 0
           w: *o2
           m: *o1
         - tv_tg:
-            x: 0.5069885
+            x: 0.444954
             y: 1
             z: 0
             w: 0
           w: *o2
           m: *o1
     directionCheck:
-      distance: 15
-      dotThreshold: 0
+      distance: 16
+      dotThreshold: 0.9
     velocityCompensation:
       rangeLimit:
-        x: 200
-        y: 300
+        x: 20
+        y: 80
       timeLimit: 1
-      iterations: 3
-      targetVelocityCompensation: 0.9
+      iterations: 1
+      targetVelocityCompensation: 0.7
       selfVelocityCompensation: 0.8
       selfVelocityProjection: 0
   guidanceAudio:
-    soundOnLaunch: weapon_missile_seeker_fire
+    soundOnLaunch: weapon_missile_seeker_fire_short
     soundOnPriming: weapon_missile_seeker_prime
     soundOnExpiration: weapon_missile_seeker_explode
     syncProximityRange:
@@ -298,9 +262,9 @@ projectile:
     syncPowerAngularVelocity: 1
     syncSize: 1
   uiTrajectory:
-    scale: 6
-    fixedAreaDistance: 0
-    fixedAreaTime: 0
+    scale: 12
+    fixedAreaDistance: 30
+    fixedAreaTime: 0.3
     curve:
       modePostWrap: ClampForever
       modePreWrap: ClampForever
@@ -308,46 +272,33 @@ projectile:
       - tv_tg:
           x: 0
           y: 0
-          z: 0
-          w: 0
-        w: *o2
+          z: 0.009786583
+          w: 0.009786583
+        w:
+          x: 0
+          y: 0.6226734
         m: *o1
       - tv_tg:
           x: 0.3
           y: 1
-          z: 0
-          w: 0
-        w: *o3
+          z: -0.009502748
+          w: -0.009502748
+        w:
+          x: 0.641286
+          y: 0.3333333
         m: *o1
       - tv_tg:
           x: 1
           y: 0
-          z: -2.765408
-          w: -2.765408
+          z: -1.530622
+          w: -1.530622
         w:
-          x: 0.04060915
+          x: 0.05801303
           y: 0
         m: *o1
   uiSpeedAverage:
-    f: 20
+    f: 25
   uiCoverageWeight: 
   uiOptimumThreshold: 
 beam: 
-custom:
-  flags:
-    - damage_dispersed
-  ints:
-    fragment_count: 18
-  floats:
-    fragment_delay: 2
-    fragment_scatter_angle: 100
-  strings:
-    fragment_key: wpn_ml_primary_01
-    fragment_hardpoint: internal_main_equipment
-    fragment_fanout: starburst
-  vectors:
-    fragment_scale:
-      x: 0.5
-      y: 0.5
-      z: 0.65
-
+custom: 
