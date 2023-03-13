@@ -44,7 +44,7 @@ stats:
     targetSocket: ''
     targetHardpoint: ''
   wpn_damage:
-    value: 16
+    value: 17
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''

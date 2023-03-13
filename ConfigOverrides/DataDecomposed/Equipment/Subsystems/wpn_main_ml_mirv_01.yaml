@@ -22,12 +22,12 @@ stats:
     targetSocket: ''
     targetHardpoint: ''
   act_duration:
-    value: 2.1
+    value: 2
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   act_heat:
-    value: 145
+    value: 155
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
@@ -47,7 +47,7 @@ stats:
     targetSocket: ''
     targetHardpoint: ''
   wpn_damage:
-    value: 95
+    value: 70
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
@@ -337,7 +337,7 @@ custom:
   flags:
     - damage_dispersed
   ints:
-    fragment_count: 23
+    fragment_count: 17
   floats:
     fragment_delay: 1
     fragment_scatter_angle: 100
