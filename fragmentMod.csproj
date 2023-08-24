@@ -65,6 +65,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ProjectileScale.cs" />
     <Compile Include="DestroyProjectile.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Patch.cs" />

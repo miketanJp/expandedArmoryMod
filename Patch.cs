@@ -163,7 +163,9 @@ namespace fragmentMod
 				blueprint.TryGetFloat("fragment_scatter_angle", out var scatterAngle, scatterAngleFromPart);
 				scatterAngle = Mathf.Max(0f, scatterAngle);
 
-				blueprint.TryGetVector("fragment_scale", out var scale, projectileData.visual.body.scale);
+
+				var projScale = new DataBlockSubsystemProjectileVisual();
+                blueprint.TryGetVector("fragment_scale", out var scale, projScale.body.scale);
 
 				// This statement can be moved around depending on how often you want to trace.
 				// With the statement here, only when we find suitable projectiles will the code
