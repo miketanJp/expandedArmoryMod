@@ -184,7 +184,7 @@ namespace fragmentMod
 			var v = (ValueTuple<bool, CombatEntity>)o;
 			if (v.Item1)
 			{
-				return string.Format("[29] - projectile {0} - fragment {1} - ProjectileIndex Added | value: {2}", i, n, v.Item2.projectileIndex.i);
+				return string.Format("[29] - projectile {0} - fragment {1} - ProjectileIndex Added | value: {2}", i, n, v.Item2.projectileIndex.index);
 			}
 			return "[29] - ProjectileIndex Not Added";
 		}

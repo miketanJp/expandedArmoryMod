@@ -1,6 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <_SkipUpgradeNetAnalyzersNuGetWarning>true</_SkipUpgradeNetAnalyzersNuGetWarning>
+  </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -9,6 +12,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>fragmentMod</RootNamespace>
     <AssemblyName>fragmentMod</AssemblyName>
+    <TargetFramework>net8</TargetFramework>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -32,48 +36,36 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>Z:\Epic Games\Games\PhantomBrigade\PhantomBrigade_Data\Managed\0Harmony.dll</HintPath>
+      <HintPath>~/VSCodeProjects/fragmentMod/Assemblies/0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>Z:\Epic Games\Games\PhantomBrigade\PhantomBrigade_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>home\michele_paolucci\VSCodeProjects\fragmentMod\Assemblies\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>Z:\Epic Games\Games\PhantomBrigade\PhantomBrigade_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath>home\michele_paolucci\VSCodeProjects\fragmentMod\Assemblies\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="Entitas">
-      <HintPath>Z:\Epic Games\Games\PhantomBrigade\PhantomBrigade_Data\Managed\Entitas.dll</HintPath>
+      <HintPath>home\michele_paolucci\VSCodeProjects\fragmentMod\Assemblies\Entitas.dll</HintPath>
     </Reference>
     <Reference Include="Entitas.Unity">
-      <HintPath>Z:\Epic Games\Games\PhantomBrigade\PhantomBrigade_Data\Managed\Entitas.Unity.dll</HintPath>
+      <HintPath>home\michele_paolucci\VSCodeProjects\fragmentMod\Assemblies\Entitas.Unity.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
+    <Reference Include="System"/>
+    <Reference Include="System.Core"/>
     <Reference Include="Unity.Entities">
-      <HintPath>Z:\Epic Games\Games\PhantomBrigade\PhantomBrigade_Data\Managed\Unity.Entities.dll</HintPath>
+      <HintPath>home\michele_paolucci\VSCodeProjects\fragmentMod\Assemblies\Unity.Entities.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>Z:\Epic Games\Games\PhantomBrigade\PhantomBrigade_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>home\michele_paolucci\VSCodeProjects\fragmentMod\Assemblies\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>Z:\Epic Games\Games\PhantomBrigade\PhantomBrigade_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>home\michele_paolucci\VSCodeProjects\fragmentMod\Assemblies\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>Z:\Epic Games\Games\PhantomBrigade\PhantomBrigade_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath>home\michele_paolucci\VSCodeProjects\fragmentMod\Assemblies\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule">
-      <HintPath>Z:\Epic Games\Games\PhantomBrigade\PhantomBrigade_Data\Managed\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll</HintPath>
+      <HintPath>home\michele_paolucci\VSCodeProjects\fragmentMod\Assemblies\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ProjectileScale.cs" />
-    <Compile Include="DestroyProjectile.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Patch.cs" />
-    <Compile Include="ModLink.cs" />
-    <Compile Include="Fanout.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reports.cs" />
-    <Compile Include="TargetPosition.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

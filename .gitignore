@@ -361,3 +361,15 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+Assemblies/0Harmony.dll
+Assemblies/Assembly-CSharp-firstpass.dll
+Assemblies/Assembly-CSharp.dll
+Assemblies/Entitas.dll
+Assemblies/Entitas.Unity.dll
+Assemblies/System.Core.dll
+Assemblies/System.dll
+Assemblies/Unity.Entities.dll
+Assemblies/UnityEngine.CoreModule.dll
+Assemblies/UnityEngine.dll
+Assemblies/UnityEngine.PhysicsModule.dll
+Assemblies/UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll

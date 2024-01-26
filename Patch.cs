@@ -3,18 +3,15 @@ using HarmonyLib;
 using PhantomBrigade;
 using PhantomBrigade.Combat.Systems;
 using PhantomBrigade.Data;
-using PhantomBrigade.Game.Components;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Remoting.Contexts;
 using UnityEngine;
 
 namespace fragmentMod
 {
-	using FanoutFunc = Func<Vector3, float, int, int, Vector3>;
+    using FanoutFunc = Func<Vector3, float, int, int, Vector3>;
 
-	[HarmonyPatch]
+    [HarmonyPatch]
 	public partial class Patch
 	{
 		private static readonly Dictionary<string, FanoutFunc> fanouts = new Dictionary<string, FanoutFunc>()
@@ -24,16 +21,14 @@ namespace fragmentMod
 			["starburst"] = StarburstFanout,
 		};
 
-		[HarmonyPatch(typeof(ScheduledAttackSystem), "Execute", MethodType.Normal)]
+		[HarmonyPatch(typeof(ProjectileFragmentationDelaySystem), "Execute", MethodType.Normal)]
 		[HarmonyPostfix]
 		static void Sas_fragment()
 		{
 			var trace = false;
-			//var debugInfo = new Queue<(Func<int, int, object, string>, int, int, object)>();
 
 			var combat = Contexts.sharedInstance.combat;
 
-			//debugInfo.Enqueue((ReportCombatContext, 0, 0, combat));
 
             var projectiles = Contexts.sharedInstance.combat.GetEntities(CombatMatcher.DataLinkSubsystemProjectile);
 
@@ -71,7 +66,7 @@ namespace fragmentMod
 					continue;
 				}
 
-				var speed = rigidbody.velocity.magnitude;
+				var speed = rigidbody.rb.velocity.magnitude;
 				var targetPosition = GetTargetPosition(projectile, speed);
 
 				var part = IDUtility.GetEquipmentEntity(projectile.parentPart.equipmentID);
@@ -267,7 +262,7 @@ namespace fragmentMod
 
                     if (projectile.hasProjectileIndex)
 					{
-						projectileNew.ReplaceProjectileIndex(projectile.projectileIndex.i);
+						projectileNew.ReplaceProjectileIndex(projectile.projectileIndex.index, n);
 					}
 
 					AssetPoolUtility.AttachInstance(projectile.assetKey.key, projectileNew, true);
@@ -285,9 +280,13 @@ namespace fragmentMod
 						projectileData,
 						projectile.position.v,
 						facing,
-						rigidbody.velocity.magnitude,
+						rigidbody.rb.velocity.magnitude,
 						projectile.projectileGuidanceTargetPosition.v,
-						addedVelocity: default);
+						addedVelocity: 0);
+
+						
+
+					
 
 					if (projectile.hasFlightInfo)
 					{
