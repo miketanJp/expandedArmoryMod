@@ -25,7 +25,7 @@ stats:
     targetSocket: ''
     targetHardpoint: ''
   act_heat:
-    value: 200
+    value: 150
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
@@ -45,7 +45,7 @@ stats:
     targetSocket: ''
     targetHardpoint: ''
   wpn_damage:
-    value: 26
+    value: 125
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
@@ -70,12 +70,12 @@ stats:
     targetSocket: ''
     targetHardpoint: ''
   wpn_range_max:
-    value: 200
+    value: 100
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_range_min:
-    value: 105
+    value: 45
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
@@ -95,7 +95,7 @@ stats:
     targetSocket: ''
     targetHardpoint: ''
   wpn_speed:
-    value: 15
+    value: 16
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
@@ -246,16 +246,7 @@ activation:
         b: 0.30
     localSocketOverride: 
     localHardpointOverride: 
-    #ONLY USE LOCAL TRANSFORM OVERRIDE FOR PARTS THAT HAVE NO PHYSICAL MUZZLE (FRONT PARTS)#
-    #localTransformOverride:
-      #position:
-      #  x: 0
-      #  y: 0
-      #  z: 5
-      #rotation:
-      #  x: 0
-      #  y: 0
-      #  z: 0
+    localTransformOverride: 
   audio: 
   light:
     shared: true
@@ -303,8 +294,7 @@ projectile:
     addedSpeed: 10
     generationLimit: 1
     lifetimeReset: true
-    fxKey: 
-    #fxKey: fx_muzzle_rifle_sniper_blue
+    fxKey: fx_muzzle_rifle_sniper_blue
     subsystemOverride: wpn_main_ml_mirv_00
     targetUnitFiltered: 
     rotationToTarget: 
@@ -475,40 +465,77 @@ projectile:
     syncSize: 1
   statusBuildup: 
   uiTrajectory:
-    scale: 6
+    scale: 9
     fixedAreaDistance: 0
     fixedAreaTime: 0
     curve:
       modePostWrap: ClampForever
       modePreWrap: ClampForever
       keys:
-      - tv_tg:
-          x: 0
-          y: 1
-          z: 0
-          w: 0
-        w: *o2
-        m: *o1
-      - tv_tg:
-          x: 0.3
-          y: 1
-          z: 0
-          w: 0
-        w: *o3
-        m: *o1
-      - tv_tg:
-          x: 1
-          y: 0
-          z: -2.765408
-          w: -2.765408
-        w:
-          x: 0.04060915
-          y: 0
-        m: *o1
+        - tv_tg:
+            x: 0
+            y: 1
+            z: -0.01129187
+            w: -0.01129187
+          w:
+            x: 0.4559586
+            y: 1
+          m: {}
+        - tv_tg:
+            x: 0
+            y: 1
+            z: -0.01129187
+            w: -0.01129187
+          w:
+            x: 0.4559586
+            y: 1
+          m: {}
+        - tv_tg:
+            x: 0
+            y: 4
+            z: -0.01129187
+            w: -0.01129187
+          w:
+            x: 0.4559586
+            y: 1
+          m: {}
+        - tv_tg:
+            x: 0
+            y: 4
+            z: -0.01129187
+            w: -0.01129187
+          w:
+            x: 0.4559586
+            y: 1
+          m: {}
+        - tv_tg:
+            x: 1
+            y: 1
+            z: -0.01129187
+            w: -0.01129187
+          w:
+            x: 0.4559586
+            y: 1
+          m: *o1
+        - tv_tg:
+            x: -0.5
+            y: -0.5
+            z: 0.01129187
+            w: 0.01129187
+          w:
+            x: 0.4559586
+            y: 1
+          m: {}
   uiSpeedAverage:
     f: 20
   uiCoverageWeight: 
   uiOptimumThreshold: 
 beam: 
-custom: 
+custom:
+  flags:
+  - damage_dispersed
+  ints: 
+  floats: 
+  vectors: 
+  strings: 
 functions: 

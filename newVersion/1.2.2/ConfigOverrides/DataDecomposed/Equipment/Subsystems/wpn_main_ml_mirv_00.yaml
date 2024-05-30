@@ -41,7 +41,7 @@ stats:
     targetSocket: ''
     targetHardpoint: ''
   wpn_damage:
-    value: 26
+    value: 125
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
@@ -158,14 +158,50 @@ projectile:
     addedSpeed: 0
     generationLimit: 2
     lifetimeReset: true
-    #wheter the damage is split per child projectile (if ON by default, determines if parent subsystem damage is split per child)
+    #wheter the damage is split per child projectile (if ON by default, damage per child projectile is splitted by PARENT subsystem's damage stat)
     damageSplit: true
     fxKey: fx_muzzle_rifle_sniper_blue
     subsystemOverride: 
     #Whether damage of parent projectile is ignored in favor of calculating damage from subsystemOverride subsystem (default: OFF). Useful if you want a separate subsystem to control fragment damage,
     #without any influence from the parent or its perks/subsystems.
     subsystemOverridesDamage: true
-    targetUnitFiltered: 
+    targetUnitFiltered:
+      sort: Distance
+      unitLimit: 13
+      unitRepeats: false
+      exportEntitiesToBlackboardLimited: 
+      exportCountToMemoryLimited: 
+      exportCountToMemory: 
+      exportEntitiesToBlackboard: 
+      tags: 
+      name: 
+      faction: 
+      state: 
+      actionPlanned: 
+      locationOccupied: 
+      locationOccupiedUnlinked: 
+      relativeTransform:
+        origin: 
+        directionOriginRotation:
+          x: 0
+          y: 0
+          z: 0
+        directionDot: 
+        directionDotFlat:
+          check: Less
+          value: 80
+        directionAngle: 
+        distance:
+          socketStatSource: 
+          range:
+            x: 25
+            y: 200
+      blueprints: 
+      classes: 
+      stats: 
+      statsNormalized: 
+      actionsInProgress: 
+      functions: 
     rotationToTarget: 
   falloff: 
   falloffGlobal: 
