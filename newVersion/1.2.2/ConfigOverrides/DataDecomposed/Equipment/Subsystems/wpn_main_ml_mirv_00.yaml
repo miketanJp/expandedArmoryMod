@@ -7,30 +7,26 @@ textName:
 textDescFromPreset: 
 textDesc: 
 hardpoints: 
-tags:
-- mnf_01
-- spec_stabilized
-- stat_concussive
-- category_wpn_mirv
+tags: 
 statDistribution: ''
 stats:
   act_count:
-    value: 0
+    value: 1
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   act_duration:
-    value: 2.25
+    value: 1
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   act_heat:
-    value: 130
+    value: 200
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   mass:
-    value: 4
+    value: 8
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
@@ -40,32 +36,32 @@ stats:
     targetSocket: ''
     targetHardpoint: ''
   wpn_concussion:
-    value: 1.677412
+    value: 0.7
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_damage:
-    value: 0
+    value: 26
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_damage_radius:
-    value: 3
+    value: 4
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_impact:
-    value: 35
+    value: 20
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_impact_radius:
-    value: 5
+    value: 4
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_proj_lifetime:
-    value: 5
+    value: 6
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
@@ -75,27 +71,27 @@ stats:
     targetSocket: ''
     targetHardpoint: ''
   wpn_range_min:
-    value: 100
+    value: 105
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_scatter_angle:
-    value: 30
+    value: 10
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_scatter_angle_moving:
-    value: 30
+    value: 10
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_scatter_radius:
-    value: 0
+    value: 1
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_speed:
-    value: 100
+    value: 70
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
@@ -110,9 +106,12 @@ activation:
         x: 1
         y: 1
         z: 1
-      hueOffset: 
-      hueOffsetEnemy: 
     root: 
+      hueOffset:
+        r: 1.0
+        g: 0.53
+        b: 0.30
+      hueOffsetEnemy: 
     localSocketOverride: 
     localHardpointOverride: 
   audio: 
@@ -129,76 +128,44 @@ projectile:
   visual:
     body:
       key: fx_projectile_missile_01_small_blue
-      keyEnemy: fx_projectile_missile_01_small_red
       scale:
         x: 1.25
         y: 1.25
         z: 1.25
-      colorOverride: 
-      colorOverrideEnemy: 
     impact:
       key: fx_projectile_pop
-      keyEnemy: ''
+      keyEnemy: 
       scale: {}
-      hueOffset: 
-      hueOffsetEnemy: 
     deactivation:
       key: fx_projectile_pop
-      keyEnemy: ''
+      keyEnemy: 
       scale: {}
-      hueOffset: 
-      hueOffsetEnemy: 
   audio: 
   damageDelay: 
   distribution: 
   range: 
   fragmentation: 
   fragmentationDelayed:
-    count: 18
+    count: 13
     time: 0.1
+    #Scatter angle (0-270)
     angle: 180
-    addedSpeed: 100
+    #Minimum scatter angle (same like angle)
+    angleMin: 0
+    #Uniform distribution factor (where 0 is old random behavior and 1 is each projectile evenly spread in a circle)
+    scatterUniformity: 0
+    #Adds speed to kinetic projectiles
+    addedSpeed: 0
     generationLimit: 2
-    lifetimeReset: false
+    lifetimeReset: true
+    #wheter the damage is split per child projectile (if ON by default, determines if parent subsystem damage is split per child)
+    damageSplit: true
     fxKey: fx_muzzle_rifle_sniper_blue
     subsystemOverride: 
-    targetUnitFiltered:
-      sort: Distance
-      unitLimit: 1
-      unitRepeats: true
-      exportEntitiesToBlackboardLimited: 
-      exportCountToMemoryLimited: 
-      exportCountToMemory: 
-      exportEntitiesToBlackboard: 
-      tags: 
-      name: 
-      faction: 
-      state: 
-      actionPlanned: 
-      locationOccupied: 
-      locationOccupiedUnlinked: 
-      relativeTransform:
-        origin: 
-        directionOriginRotation:
-          x: 0
-          y: 0
-          z: 0
-        directionDot: 
-        directionDotFlat:
-          check: Less
-          value: 80
-        directionAngle: 
-        distance:
-          socketStatSource: 
-          range:
-            x: 25
-            y: 200
-      blueprints: 
-      classes: 
-      stats: 
-      statsNormalized: 
-      actionsInProgress: 
-      functions: 
+    #Whether damage of parent projectile is ignored in favor of calculating damage from subsystemOverride subsystem (default: OFF). Useful if you want a separate subsystem to control fragment damage,
+    #without any influence from the parent or its perks/subsystems.
+    subsystemOverridesDamage: true
+    targetUnitFiltered: 
     rotationToTarget: 
   falloff: 
   falloffGlobal: 
@@ -206,11 +173,7 @@ projectile:
     speed: 10
     distance: 3
   ballistics: 
-  fuseProximity:
-    distance: 5
-    targetExclusive: false
-    inertBeforeHit: false
-    triggerWithoutEntity: false
+  fuseProximity: 
   hitResponse: 
   splashDamage:
     exponent: 2
@@ -231,7 +194,7 @@ projectile:
     driverAccelerationMin: 1
     inputProgressFromTarget: true
     inputTargetHeightScale: 4
-    inputTargetOffsetPower: 1
+    inputTargetOffsetPower: 2
     steeringPID:
       proportionalGain: 7
       derivativeGain: 0
@@ -268,7 +231,7 @@ projectile:
     inputTargetUpdate: !DataBlockGuidanceInputConstant
       value: 1
     inputTargetOffset: !DataBlockGuidanceInputConstant
-      value: 1
+      value: 2
     inputSteering: 
     inputThrottle: !DataBlockGuidanceInputCurve
       curve:
@@ -353,4 +316,10 @@ projectile:
   uiOptimumThreshold: 
 beam: 
 custom: 
+  flags:
+  - damage_dispersed
+  ints: 
+  floats: 
+  vectors: 
+  strings: 
 functions: 

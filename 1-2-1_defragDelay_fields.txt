@@ -1,0 +1,19 @@
+damageSplit: false, subsystemOverridesDamage: false - child damage = parent damage / fragment count (the only option in 1.2)
+damageSplit: true, subsystemOverridesDamage: false - child damage = parent damage (new in 1.2.1)
+subsystemOverridesDamage: true - child damage = subsystemOverride damage leveled by parent level (new in 1.2.1)
+
+angle: 30, angleMin: 0 - completely random cone scatter between 0 and 30 degrees (the only behavior possible in 1.2)
+angle: 30, angleMin: 15 - cone scatter between 15 and 30 degrees, central 15 degree cone empty
+angle: 30, angleMin: 30 - all projectiles only ever exit at exactly 30 degrees
+
+angleMin - Minimum scatter angle (0-270, just like scatter angle)
+
+scatterUniformity - Uniform distribution factor (0-1 where 0 is old random behavior and 1 is each projectile evenly spread in a circle)
+
+addedSpeed - Speed added to kinetic projectiles (previously unused)
+
+damageSplit - Whether damage is split per projectile (on by default, determines if parent projectile damage is split per child)
+
+subsystemOverridesDamage - Whether damage of parent projectile is completely ignored in favor of calculating damage from subsystemOverride subsystem (off by default).
+Useful if you want a separate subsystem to control fragment damage, without any influence from the parent or its perks/subsystems. Only the level is carried forward if it's enabled,
+but kinetic/impact/concussive/heat/stability damage is taken from subsystemOverride.
