@@ -245,30 +245,126 @@ projectile:
         modePreWrap: ClampForever
         keys:
         - tv_tg:
-            x: 1
-            y: 1
-            z: -0.01129187
-            w: -0.01129187
-          w:
-            x: 0.4559586
-            y: 1
-          m: *o1
-        - tv_tg:
-            x: -0.5
-            y: -0.5
-            z: 0.01129187
-            w: 0.01129187
-          w:
-            x: 0.4559586
-            y: 1
+            x: 0
+            y: 0.375
+            z: 0
+            w: 0
+          w: {}
           m: {}
-    inputTargetBlend: !DataBlockGuidanceInputConstant
+        - tv_tg:
+            x: 0.444954
+            y: 0
+            z: -3
+            w: 0
+          w: {}
+          m: {}
+    inputTargetBlend: !DataBlockGuidanceInputCurve
+      curve:
+        modePostWrap: ClampForever
+        modePreWrap: ClampForever
+        keys:
+        - tv_tg:
+            x: 0.2736384
+            y: 0
+            z: -0.02377451
+            w: -0.02377451
+          w:
+            x: 0
+            y: 0.3333333
+          m: {}
+        - tv_tg:
+            x: 0.371517
+            y: 1
+            z: 2.311339
+            w: 2.311339
+          w:
+            x: 0.3333333
+            y: 0
+          m: {}
+    inputTargetUpdate: !DataBlockGuidanceInputCurve
+      curve:
+        modePostWrap: ClampForever
+        modePreWrap: ClampForever
+        keys:
+        - tv_tg:
+            x: 0
+            y: 1
+            z: 0
+            w: 0
+          w:
+            x: 0
+            y: 0
+          m: {}
+        - tv_tg:
+            x: 0.1237025
+            y: 1
+            z: 0
+            w: -5.542657
+          w:
+            x: 0.3333333
+            y: 0.3333333
+          m: {}
+        - tv_tg:
+            x: 0.3041214
+            y: 0
+            z: -5.542657
+            w: 0
+          w:
+            x: 0
+            y: 0
+          m: {}
+        - tv_tg:
+            x: 1
+            y: 0
+            z: 0
+            w: 0
+          w:
+            x: 0
+            y: 0
+          m: {}
+    inputTargetOffset: !DataBlockGuidanceInputCurve
+      curve:
+        modePostWrap: ClampForever
+        modePreWrap: ClampForever
+        keys:
+        - tv_tg:
+            x: 0
+            y: 1
+            z: 0
+            w: 0
+          w:
+            x: 0
+            y: 0
+          m: {}
+        - tv_tg:
+            x: 0.07216308
+            y: 1
+            z: 0
+            w: -5.880505
+          w:
+            x: 0
+            y: 0
+          m: {}
+        - tv_tg:
+            x: 0.2371149
+            y: 0.03
+            z: -5.880505
+            w: 0
+          w:
+            x: 0
+            y: 0
+          m: {}
+        - tv_tg:
+            x: 1
+            y: 0.03
+            z: 0
+            w: 0
+          w:
+            x: 0
+            y: 0
+          m: {}
+    inputSteering: !DataBlockGuidanceInputConstant
       value: 1
-    inputTargetUpdate: !DataBlockGuidanceInputConstant
-      value: 1
-    inputTargetOffset: !DataBlockGuidanceInputConstant
-      value: 2
-    inputSteering: 
     inputThrottle: !DataBlockGuidanceInputCurve
       curve:
         modePostWrap: ClampForever
@@ -279,8 +375,27 @@ projectile:
             y: 0.375
             z: 0
             w: 0
-          w: *o2
-          m: *o1
+          w: {}
+          m: {}
+        - tv_tg:
+            x: 0.444954
+            y: 1
+            z: 0.50
+            w: 0
+          w: {}
+          m: {}
+    inputThrottle: !DataBlockGuidanceInputCurve
+      curve:
+        modePostWrap: ClampForever
+        modePreWrap: ClampForever
+        keys:
+        - tv_tg:
+            x: 0
+            y: 0.375
+            z: 0
+            w: 0
+          w: {}
+          m: {}
         - tv_tg:
             x: 0.444954
             y: 1

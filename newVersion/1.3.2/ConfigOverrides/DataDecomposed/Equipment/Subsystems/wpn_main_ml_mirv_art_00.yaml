@@ -41,7 +41,7 @@ stats:
     targetSocket: ''
     targetHardpoint: ''
   wpn_damage:
-    value: 150
+    value: 200
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
@@ -71,12 +71,12 @@ stats:
     targetSocket: ''
     targetHardpoint: ''
   wpn_range_min:
-    value: 105
+    value: 100
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_scatter_angle:
-    value: 10
+    value: 30
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
@@ -86,12 +86,12 @@ stats:
     targetSocket: ''
     targetHardpoint: ''
   wpn_scatter_radius:
-    value: 1
+    value: 30
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_speed:
-    value: 70
+    value: 150
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
@@ -127,11 +127,11 @@ projectile:
   debugIndexRange: {}
   visual:
     body:
-      key: fx_projectile_missile_01_small_blue
+      key: fx_projectile_standard_blue
       scale:
-        x: 1.25
-        y: 1.25
-        z: 1.25
+        x: 0.50
+        y: 0.50
+        z: 0.50
     impact:
       key: fx_projectile_pop
       keyEnemy: 
@@ -145,64 +145,7 @@ projectile:
   distribution: 
   range: 
   fragmentation: 
-  fragmentationDelayed:
-    count: 13
-    time: 0.1
-    #Scatter angle (0-270)
-    angle: 180
-    #Minimum scatter angle (same like angle)
-    angleMin: 0
-    #Uniform distribution factor (where 0 is old random behavior and 1 is each projectile evenly spread in a circle)
-    scatterUniformity: 0
-    #Adds speed to kinetic projectiles
-    addedSpeed: 0
-    generationLimit: 2
-    lifetimeReset: true
-    #wheter the damage is split per child projectile (if ON by default, damage per child projectile is splitted by PARENT subsystem's damage stat)
-    damageSplit: true
-    fxKey: fx_muzzle_rifle_sniper_blue
-    subsystemOverride: 
-    #Whether damage of parent projectile is ignored in favor of calculating damage from subsystemOverride subsystem (default: OFF). Useful if you want a separate subsystem to control fragment damage,
-    #without any influence from the parent or its perks/subsystems.
-    subsystemOverridesDamage: true
-    targetUnitFiltered:
-      sort: Distance
-      unitLimit: 13
-      unitRepeats: false
-      exportEntitiesToBlackboardLimited: 
-      exportCountToMemoryLimited: 
-      exportCountToMemory: 
-      exportEntitiesToBlackboard: 
-      tags: 
-      name: 
-      faction: 
-      state: 
-      actionPlanned: 
-      locationOccupied: 
-      locationOccupiedUnlinked: 
-      relativeTransform:
-        origin: 
-        directionOriginRotation:
-          x: 0
-          y: 0
-          z: 0
-        directionDot: 
-        directionDotFlat:
-          check: Less
-          value: 80
-        directionAngle: 
-        distance:
-          socketStatSource: 
-          range:
-            x: 25
-            y: 200
-      blueprints: 
-      classes: 
-      stats: 
-      statsNormalized: 
-      actionsInProgress: 
-      functions: 
-    rotationToTarget: 
+  fragmentationDelayed: 
   falloff: 
   falloffGlobal: 
   animationFade:
@@ -223,14 +166,16 @@ projectile:
   guidanceData:
     rigidbodyMass: 1
     rigidbodyDrag: 3
-    rigidbodyAngularDrag: 7
-    driverSteeringForce: 14
-    driverPitchForce: 14
+    rigidbodyAngularDrag: 4
+    driverSteeringForce: 20
+    driverPitchForce: 20
     driverAccelerationForce: 100
     driverAccelerationMin: 1
     inputProgressFromTarget: true
     inputTargetHeightScale: 4
     inputTargetOffsetPower: 2
+    inputThrottleDotPowerScale: 1
+    inputTargetPointLateralMode: Interleaved
     steeringPID:
       proportionalGain: 7
       derivativeGain: 0
@@ -239,55 +184,118 @@ projectile:
       proportionalGain: 7
       derivativeGain: 0
       integralGain: 0
-    inputTargetHeight: !DataBlockGuidanceInputCurve
+    inputTargetPointLateral: 
+    inputTargetHeight: !DataBlockGuidanceInputConstant
+      value: 0
+    inputTargetBlend: !DataBlockGuidanceInputCurve
       curve:
         modePostWrap: ClampForever
         modePreWrap: ClampForever
         keys:
         - tv_tg:
-            x: 1
+            x: 0.2736384
             y: 1
-            z: -0.01129187
-            w: -0.01129187
+            z: -0.02377451
+            w: -0.02377451
           w:
-            x: 0.4559586
-            y: 1
-          m: *o1
-        - tv_tg:
-            x: -0.5
-            y: -0.5
-            z: 0.01129187
-            w: 0.01129187
-          w:
-            x: 0.4559586
-            y: 1
+            x: 0
+            y: 0.3333333
           m: {}
-    inputTargetBlend: !DataBlockGuidanceInputConstant
-      value: 1
-    inputTargetUpdate: !DataBlockGuidanceInputConstant
-      value: 1
-    inputTargetOffset: !DataBlockGuidanceInputConstant
-      value: 2
-    inputSteering: 
-    inputThrottle: !DataBlockGuidanceInputCurve
+        - tv_tg:
+            x: 0.371517
+            y: 1
+            z: 2.311339
+            w: 2.311339
+          w:
+            x: 0.3333333
+            y: 0
+          m: {}
+    inputTargetUpdate: !DataBlockGuidanceInputCurve
       curve:
         modePostWrap: ClampForever
         modePreWrap: ClampForever
         keys:
         - tv_tg:
             x: 0
-            y: 0.375
+            y: 1
             z: 0
             w: 0
-          w: *o2
-          m: *o1
-        - tv_tg:
-            x: 0.444954
-            y: 1
-            z: 0.50
-            w: 0
-          w: {}
+          w:
+            x: 0
+            y: 0
           m: {}
+        - tv_tg:
+            x: 0.1237025
+            y: 1
+            z: 0
+            w: -5.542657
+          w:
+            x: 0.3333333
+            y: 0.3333333
+          m: {}
+        - tv_tg:
+            x: 0.3041214
+            y: 0
+            z: -5.542657
+            w: 0
+          w:
+            x: 0
+            y: 0
+          m: {}
+        - tv_tg:
+            x: 1
+            y: 0
+            z: 0
+            w: 0
+          w:
+            x: 0
+            y: 0
+          m: {}
+    inputTargetOffset: !DataBlockGuidanceInputCurve
+      curve:
+        modePostWrap: ClampForever
+        modePreWrap: ClampForever
+        keys:
+        - tv_tg:
+            x: 0
+            y: 1
+            z: 0
+            w: 0
+          w:
+            x: 0
+            y: 0
+          m: {}
+        - tv_tg:
+            x: 0.07216308
+            y: 1
+            z: 0
+            w: -5.880505
+          w:
+            x: 0
+            y: 0
+          m: {}
+        - tv_tg:
+            x: 0.2371149
+            y: 0.03
+            z: -5.880505
+            w: 0
+          w:
+            x: 0
+            y: 0
+          m: {}
+        - tv_tg:
+            x: 1
+            y: 0.03
+            z: 0
+            w: 0
+          w:
+            x: 0
+            y: 0
+          m: {}
+    inputSteering: !DataBlockGuidanceInputConstant
+      value: 1
+    inputThrottle: !DataBlockGuidanceInputConstant
+      value: 1
     directionCheck:
       distance: 16
       dotThreshold: 0.9
@@ -301,8 +309,8 @@ projectile:
       selfVelocityCompensation: 0.8
       selfVelocityProjection: 0
   guidanceAudio:
-    soundOnLaunch: weapon_missile_seeker_fire_short
-    soundOnPriming: weapon_missile_seeker_prime
+    soundOnLaunch: 
+    soundOnPriming: 
     soundOnExpiration: weapon_missile_seeker_explode
     syncProximityRange:
       x: 12
@@ -310,44 +318,8 @@ projectile:
     syncPowerAngularVelocity: 1
     syncSize: 1
   statusBuildup: 
-  uiTrajectory:
-    scale: 12
-    fixedAreaDistance: 30
-    fixedAreaTime: 0.3
-    arrivalTimes: 
-    curve:
-      modePostWrap: ClampForever
-      modePreWrap: ClampForever
-      keys:
-      - tv_tg:
-          x: 0
-          y: 0
-          z: 0.009786583
-          w: 0.009786583
-        w:
-          x: 0
-          y: 0.6226734
-        m: {}
-      - tv_tg:
-          x: 0.3
-          y: 1
-          z: -0.009502748
-          w: -0.009502748
-        w:
-          x: 0.641286
-          y: 0.3333333
-        m: {}
-      - tv_tg:
-          x: 1
-          y: 0
-          z: -1.530622
-          w: -1.530622
-        w:
-          x: 0.05801303
-          y: 0
-        m: {}
-  uiSpeedAverage:
-    f: 25
+  uiTrajectory: 
+  uiSpeedAverage: 
   uiCoverageWeight: 
   uiOptimumThreshold: 
 beam: 
