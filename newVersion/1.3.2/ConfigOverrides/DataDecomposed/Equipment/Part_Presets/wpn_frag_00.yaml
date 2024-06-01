@@ -21,5 +21,5 @@ genSteps:
   hardpointsTargeted:
   - internal_main_equipment
   priority: 0
-  comment: Part preset for Frag cannon's fragment (shrapnels?)
+  comment: 
   checks: 
