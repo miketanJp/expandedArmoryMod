@@ -2,4 +2,6 @@ edits:
   wpn_ml_mirv_01__name: MRV/01 Vanguard
   wpn_ml_mirv_01__text: Un lanciamissili multiplo portatile. I missili sono dotati di testate multiple capaci di colpire in bersargli autonomamente.
   wpn_ml_mirv_art_01__name: MRV/19 M.A.S.L.
-  wpn_ml_mirv_art_01_text: Acronimo di Multiple Artillery Shell Launcher, è dotata di un vettore modificato con un meccanismo che espelle munizioni da 105mm di fronte al nemico, ciascuno di essi con un modesto raggio esplosivo.
+  wpn_ml_mirv_art_01__text: Acronimo di Multiple Artillery Shell Launcher, è dotata di un vettore modificato con un meccanismo che espelle munizioni da 105mm di fronte al nemico, ciascuno di essi con un modesto raggio esplosivo.
+  wpn_frag_01__name: SRP/66-D S.A.G.C. (Semi-Automatic Grenade Cannon)
+  wpn_frag_01__test: This semi-automatic grenade launcher has an unique and quick reload mechanism able to perform a sustained rate of fire. Its strong design make this weapon a reliable choice, while the advanced aim system provides good precision.

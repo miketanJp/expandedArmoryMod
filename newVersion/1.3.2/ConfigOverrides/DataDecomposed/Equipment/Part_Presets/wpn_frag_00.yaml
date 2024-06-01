@@ -1,6 +1,6 @@
 hidden: true
 parents:
-- key: wpn_ml_mirv
+- key: back_root
 livery: 
 ratingRange: 
 comment: 
@@ -12,14 +12,14 @@ textNameFromRating:
 textDescFromRating: 
 sockets: 
 tags:
-- range_medium
+- back_drop_boss
 genSteps:
 - !AddHardpoints
   subsystemsInitial:
-  - wpn_main_ml_mirv_00
+  - wpn_main_frag_00
   pickRandom: false
   hardpointsTargeted:
   - internal_main_equipment
   priority: 0
-  comment: 
+  comment: Part preset for Frag cannon's fragment (shrapnels?)
   checks: 
