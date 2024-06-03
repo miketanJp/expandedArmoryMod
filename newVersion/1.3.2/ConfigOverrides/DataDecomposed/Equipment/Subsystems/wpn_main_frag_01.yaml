@@ -11,8 +11,8 @@ textDesc:
 hardpoints: 
 tags:
 - mnf_mrv01
-- category_wpn_mirv
-- activation_targeted
+- category_wpn_hinged
+- activation_targeted_hinged
 - type_force_root_rotation
 - type_range_strict
 statDistribution: ''
@@ -415,8 +415,8 @@ projectile:
     driverAccelerationForce: 80
     driverAccelerationMin: 1
     inputProgressFromTarget: true
-    inputTargetHeightScale: 7
-    inputTargetOffsetPower: 2.8
+    inputTargetHeightScale: 20
+    inputTargetOffsetPower: 3
     inputThrottleDotPowerScale: 1
     inputTargetPointLateralMode: Interleaved
     steeringPID:
@@ -633,14 +633,5 @@ custom:
   strings: 
 functions:
   general: 
-  targeted:
-  - context: on_wpn_fired
-    checks: 
-    functions:
-    - !SubsystemFunctionModifyOwner
-      functions:
-      - !CombatUnitStatusBuildup
-        key: timed_unstable
-        value: 0.45
-        source: Function
+  targeted: 
   action: 

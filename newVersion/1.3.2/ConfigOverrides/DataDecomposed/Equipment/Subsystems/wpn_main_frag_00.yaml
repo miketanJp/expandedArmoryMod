@@ -9,7 +9,7 @@ textDesc:
 hardpoints: 
 tags:
 - activation_targeted
-- category_wpn_mirv
+- category_wpn_hinged
 - type_force_root_rotation
 statDistribution: ''
 stats:
