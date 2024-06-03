@@ -1,4 +1,4 @@
-hidden: true
+hidden: false
 parents:
 - key: back_root
 livery: 
@@ -16,7 +16,7 @@ tags:
 genSteps:
 - !AddHardpoints
   subsystemsInitial:
-  - wpn_main_frag_00
+  - wpn_main_grenade_cannon01
   pickRandom: false
   hardpointsTargeted:
   - internal_main_equipment

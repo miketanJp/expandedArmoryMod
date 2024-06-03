@@ -8,7 +8,7 @@ textSourceSubtitle:
 textSourceDesc:
   source: Part
   key: wpn_frag_01
-icon: s_icon_l32_part_arch_ml_secondary
+icon: s_icon_l32_part_hinged
 tags:
 - group_item
 duration:

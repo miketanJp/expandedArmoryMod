@@ -1,9 +1,9 @@
 dataUI:
   icon: s_icon_l32_add_clone
   color:
-    r: 1
-    g: 0.6568628
-    b: 0.4117647
+    r: 0.69
+    g: 0
+    b: 0.16
     a: 1
   colorOverride:
     r: 0.69
@@ -18,7 +18,7 @@ dataUI:
   modes: 
 dataCore:
   locking: false
-  trackType: Secondary
+  trackType: Double
   paintingType: Targeting
   heatType: DataConstant
   durationType: Equipment
@@ -34,36 +34,33 @@ dataCore:
   eventsOnDispose: 
   functionsOnValidation: 
   functionsOnCreation: 
-  - !CombatActionFunctionOwner
-    functions:
-    - !CombatUnitActionsCreate
-      discardExisting: false
-      actions:
-       - key: wait
-         startTime: 
-         startTimeIsLocal: false
-         locked: false
-         durationVariable: 
-          f: 1.8
-         targetLocal: 
-         target:
-           type: Self
-           name: 
-           center: true
-           modifiersDirectional: true
-           modifiers: 
-         targetSecondary: 
-         targetUnitFiltered: 
-         targetUnitLocalOffsets: 
-         movementCustom: 
-         functionsTimed: 
-         functionsOnAction: 
   functionsOnModification: 
   functionsOnStart: 
   functionsOnUpdate: 
   functionsOnEnd: 
   functionsOnDispose: 
-  check: 
+  check:
+    encompassingMethod: RequireAll
+    tagsMethod: RequireAll
+    blueprintsMethod: RequireAll
+    partsMethod: RequireAll
+    subsystemsMethod: RequireAll
+    statsMethod: RequireAll
+    tags:
+    - classTag: mech
+      not: false
+    blueprints: 
+    parts:
+    - socket: back
+      not: true
+      requirement: Destroyed
+      tags: 
+    - socket: back
+      not: false
+      requirement: Tags
+      tags:
+        type_melee: false
+        stand_and_shoot: true
   unitCheck:
     exportCountToMemory: 
     exportEntitiesToBlackboard: 

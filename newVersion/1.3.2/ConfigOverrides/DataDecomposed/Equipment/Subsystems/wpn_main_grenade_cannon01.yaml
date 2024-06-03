@@ -13,12 +13,13 @@ tags:
 - mnf_mrv01
 - category_wpn_hinged
 - activation_targeted_hinged
+- stand_and_shoot
 - type_force_root_rotation
 - type_range_strict
 statDistribution: ''
 stats:
   act_charges:
-    value: 6
+    value: 4
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
@@ -33,7 +34,7 @@ stats:
     targetSocket: ''
     targetHardpoint: ''
   act_heat:
-    value: 200
+    value: 180
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
@@ -58,12 +59,12 @@ stats:
     targetSocket: ''
     targetHardpoint: ''
   wpn_damage:
-    value: 85
+    value: 95
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_damage_radius:
-    value: 12
+    value: 25
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
@@ -73,7 +74,7 @@ stats:
     targetSocket: ''
     targetHardpoint: ''
   wpn_impact_radius:
-    value: 12
+    value: 25
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
@@ -83,32 +84,32 @@ stats:
     targetSocket: ''
     targetHardpoint: ''
   wpn_range_max:
-    value: 200
+    value: 120
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_range_min:
-    value: 70
+    value: 90
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_scatter_angle:
-    value: 100
+    value: 30
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
   wpn_scatter_angle_moving:
-    value: 50
-    targetMode: 0
-    targetSocket: ''
-    targetHardpoint: ''
-  wpn_scatter_radius:
     value: 45
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
+  wpn_scatter_radius:
+    value: 25
+    targetMode: 0
+    targetSocket: ''
+    targetHardpoint: ''
   wpn_speed:
-    value: 11
+    value: 15
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
@@ -328,7 +329,7 @@ activation:
     key: wpn_sniper
     custom: 
   recoil:
-    key: recoil_rifle_sniper
+    key: recoil_flat
   timing: 
   hitReaction:
     force: 1
@@ -339,27 +340,29 @@ projectile:
       key: fx_projectile_missile_01_regular
       keyEnemy: 
       scale:
-        x: 0.6
-        y: 0.6
-        z: 0.6
+        x: 0.8
+        y: 0.8
+        z: 0.8
       colorOverride: 
       colorOverrideEnemy: 
     impact:
-      key: fx_projectile_pop
+      key: fx_aoe_explosion_01_large
+      #key: fx_projectile_pop
       keyEnemy: ''
       scale:
-        x: 1.8
-        y: 1.8
-        z: 1.8
+        x: 3
+        y: 7
+        z: 3
       hueOffset: 
       hueOffsetEnemy: 
     deactivation:
-      key: fx_projectile_pop
+      key: fx_aoe_explosion_01_large
+      #key: fx_projectile_pop
       keyEnemy: ''
       scale:
-        x: 1
-        y: 1
-        z: 1
+        x: 2.6
+        y: 2.6
+        z: 2.6
       hueOffset: 
       hueOffsetEnemy: 
   audio: 
@@ -368,21 +371,6 @@ projectile:
   range: 
   fragmentation: 
   fragmentationDelayed: 
-    #count: 1
-    #time: 5
-    #angle: 10
-    #angleMin: 2
-    #scatterUniformity: 1
-    #addedSpeed: 5
-    #generationLimit: 1
-    #lifetimeReset: true
-    #damageSplit: true
-    #fxKey: 
-    #subsystemOverride: wpn_main_shotgun_04
-    #subsystemOverridesDamage: false
-    #targetUnitFiltered: 
-    #rotationToTarget:
-    #rotationLimit: 60
   falloff: 
   falloffGlobal: 
   animationFade:
@@ -390,7 +378,7 @@ projectile:
     distance: 3
   ballistics: 
   fuseProximity:
-    distance: 10
+    distance: 5
     targetExclusive: true
     inertBeforeHit: false
     triggerWithoutEntity: false
@@ -406,16 +394,16 @@ projectile:
     triggerOnDamage: true
   guidanceData:
     rigidbodyMass: 1
-    rigidbodyDrag: 2
+    rigidbodyDrag: 1
     rigidbodyDriftDrag: 4
     rigidbodyAngularDrag: 9
     rigidbodyLift: 0.1
-    driverSteeringForce: 100
-    driverPitchForce: 100
+    driverSteeringForce: 10
+    driverPitchForce: 10
     driverAccelerationForce: 80
     driverAccelerationMin: 1
     inputProgressFromTarget: true
-    inputTargetHeightScale: 20
+    inputTargetHeightScale: 6
     inputTargetOffsetPower: 3
     inputThrottleDotPowerScale: 1
     inputTargetPointLateralMode: Interleaved
@@ -428,10 +416,8 @@ projectile:
       derivativeGain: 0.5
       integralGain: 0
     inputTargetPointLateral: 
-    inputTargetHeight: !DataBlockGuidanceInputLinear
-      valueFrom: 1
-      valueTo: 0
-      timeRange:
+    inputTargetHeight: !DataBlockGuidanceInputConstant
+      value: 0
     inputTargetBlend: !DataBlockGuidanceInputCurve
       curve:
         modePostWrap: ClampForever
@@ -439,7 +425,7 @@ projectile:
         keys:
         - tv_tg:
             x: 0.2736384
-            y: 0
+            y: 0.80
             z: -0.02377451
             w: -0.02377451
           w:
@@ -448,7 +434,7 @@ projectile:
           m: {}
         - tv_tg:
             x: 0.371517
-            y: 1
+            y: 3
             z: 2.311339
             w: 2.311339
           w:
@@ -488,7 +474,7 @@ projectile:
             y: 0
           m: {}
         - tv_tg:
-            x: 1
+            x: 0
             y: 0
             z: 0
             w: 0
