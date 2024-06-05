@@ -16,7 +16,7 @@ tags:
 genSteps:
 - !AddHardpoints
   subsystemsInitial:
-  - wpn_main_grenade_cannon01
+  - wpn_main_grenade_cannon_01
   pickRandom: false
   hardpointsTargeted:
   - internal_main_equipment

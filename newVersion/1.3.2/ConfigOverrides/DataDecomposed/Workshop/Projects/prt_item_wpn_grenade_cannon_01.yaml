@@ -1,13 +1,13 @@
 hidden: false
 textSourceName:
   source: Part
-  key: wpn_frag_01
+  key: wpn_grenade_cannon_01
 textSourceSubtitle:
   source: Group
   key: part_wpn_mirv
 textSourceDesc:
   source: Part
-  key: wpn_frag_01
+  key: wpn_grenade_cannon_01
 icon: s_icon_l32_part_hinged
 tags:
 - group_item
@@ -25,7 +25,7 @@ inputResources:
   amount: 1
 outputParts:
 - count: 1
-  key: wpn_frag_01
+  key: wpn_grenade_cannon_01
   tags: 
 outputSubsystems: 
 outputUnits: 

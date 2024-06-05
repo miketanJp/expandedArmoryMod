@@ -562,7 +562,7 @@ projectile:
       keys:
       - tv_tg:
           x: 0
-          y: 0
+          y: 1
           z: 0
           w: 0
         w:
@@ -571,7 +571,7 @@ projectile:
         m: {}
       - tv_tg:
           x: 0.05076062
-          y: 0
+          y: 0.50
           z: 0
           w: 0
         w:
@@ -589,21 +589,12 @@ projectile:
         m: {}
       - tv_tg:
           x: 0.3
-          y: 1
+          y: 0.10
           z: 0
           w: 0
         w:
           x: 0.3333333
           y: 0.3333333
-        m: {}
-      - tv_tg:
-          x: 1
-          y: 0
-          z: -2.765408
-          w: -2.765408
-        w:
-          x: 0.04060915
-          y: 0
         m: {}
   uiSpeedAverage:
     f: 28
@@ -619,5 +610,22 @@ custom:
   strings: 
 functions:
   general: 
-  targeted: 
-  action: 
+  targeted:
+  - context: on_wpn_fired
+    checks: 
+    functions:
+    - !SubsystemFunctionModifyOwner
+      functions:
+      - !CombatUnitStatusBuildup
+        key: timed_unstable
+        value: 0.37
+        source: Function
+  - context: on_part_activation
+    checks: 
+    functions:
+    - !SubsystemFunctionModifyOwner
+      functions:
+      - !CombatUnitStatusBuildup
+        key: timed_unstable
+        value: 0.35
+        source: Function
