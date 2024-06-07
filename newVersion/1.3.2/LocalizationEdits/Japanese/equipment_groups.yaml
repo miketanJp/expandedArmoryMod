@@ -1,5 +1,7 @@
 edits:
   part_wpn_mirv__name: MIRV
   part_wpn_mirv__text: (Multiple Independently targetable Reentry Vehicles) の略。この種の兵器は、複数弾頭を投射して複数標的を同時に攻撃することが可能。
-  part_mnf_mrv01__name: ストレル武器課
-  part_mnf_mrv01__text: 書き込み中
+  part_wpn_hinged__name: ヒンジ付き武器
+  part_wpn_hinged__text: 書き込み中
+  part_mnf_mrv01__name: ストレル兵器局
+  part_mnf_mrv01__text: かつては軍の兵器部門として悪名を馳せ、鹵獲または回収した珍しいハイテク部品の製造を主な専門とする。
