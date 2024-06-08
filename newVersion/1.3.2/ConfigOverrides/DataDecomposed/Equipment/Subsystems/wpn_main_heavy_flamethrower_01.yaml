@@ -13,7 +13,7 @@ tags:
 statDistribution: ''
 stats:
   act_count:
-    value: 300
+    value: 200
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
@@ -38,7 +38,7 @@ stats:
     targetSocket: ''
     targetHardpoint: ''
   wpn_concussion:
-    value: 0.1
+    value: 0.05
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
@@ -113,7 +113,7 @@ stats:
     targetSocket: ''
     targetHardpoint: ''
   wpn_turnrate_limit:
-    value: 5
+    value: 6
     targetMode: 0
     targetSocket: ''
     targetHardpoint: ''
@@ -187,9 +187,9 @@ activation:
     localTransformOverride: 
   audio:
     onActivationFirst: 
-    onActivationMid: status_burning_loop
-    onActivationLast: status_burning_loop_stop
-    onActivationStart: status_burning_loop
+    onActivationMid: 
+    onActivationLast: 
+    onActivationStart: 
     onActivationEnd: status_burning_water_cool
   light:
     shared: true
@@ -215,18 +215,26 @@ projectile:
       colorOverride: 
       colorOverrideEnemy: 
     impact:
-      key: fx_environment_fire
-      keyEnemy: fx_environment_fire
+      key: fx_impact_projectile_thermal
+      keyEnemy: fx_impact_projectile_thermal
       scale:
         x: 4
         y: 4
         z: 4
       colorOverride: 
       colorOverrideEnemy: 
-    deactivation: 
+    deactivation:
+      key: ''
+      keyEnemy: ''
+      scale:
+        x: 1
+        y: 1
+        z: 1
+      hueOffset: 
+      hueOffsetEnemy: 
   audio:
-    onImpact: status_burning_loop
-    onDeactivation: 
+    onImpact: status_burning_loop_stop #mech_overheat_stop
+    onDeactivation: status_burning_water_cool
   damageDelay: 
   distribution: 
   range: 
@@ -406,11 +414,19 @@ projectile:
       targetVelocityCompensation: 0.9
       selfVelocityCompensation: 0.7
       selfVelocityProjection: 0
-  guidanceAudio: 
+  guidanceAudio:
+    soundOnLaunch: mech_overheat_start
+    soundOnPriming: 
+    soundOnExpiration: 
+    syncProximityRange:
+      x: 3
+      y: 6
+    syncPowerAngularVelocity: 1
+    syncSize: 0.40
   statusBuildup:
     key: timed_burn
     statMultiplier: 
-    amount: 0.09
+    amount: 0.12
   uiTrajectory: 
   uiSpeedAverage: 
   uiCoverageWeight: 
