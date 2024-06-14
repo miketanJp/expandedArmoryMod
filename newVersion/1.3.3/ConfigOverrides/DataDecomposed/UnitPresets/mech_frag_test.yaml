@@ -1,0 +1,30 @@
+hidden: true
+listed: true
+branchIndependent: true
+textName: 
+parents: []
+blueprint: unit_mech
+livery: 
+aiBehavior: Flanker
+aiTargeting: default
+tags:
+- type_mech
+partTagPreferences:
+parts: 
+  equipment_left:
+    livery: 
+    preset: !PartResolverClear {}
+    rating: 
+    systems: 
+  equipment_right:
+    livery: 
+    preset: !PartResolverKeys
+    rating: 
+    systems: 
+  back:
+    livery: 
+    preset: !PartResolverKeys
+      keys:
+      - wpn_frag_01
+    rating: 
+    systems: 
