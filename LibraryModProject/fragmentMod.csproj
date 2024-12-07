@@ -12,8 +12,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>fragmentMod</RootNamespace>
     <AssemblyName>fragmentMod</AssemblyName>
-    <TargetFramework>net8</TargetFramework>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFramework>net472</TargetFramework>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
@@ -36,36 +35,36 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>~/VSCodeProjects/fragmentMod/Assemblies/0Harmony.dll</HintPath>
+      <HintPath>Z:\Steam\steamapps\common\Phantom Brigade\PhantomBrigade_Data\Managed\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>home\michele_paolucci\VSCodeProjects\fragmentMod\Assemblies\Assembly-CSharp.dll</HintPath>
+      <HintPath>Z:\Steam\steamapps\common\Phantom Brigade\PhantomBrigade_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>home\michele_paolucci\VSCodeProjects\fragmentMod\Assemblies\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath>Z:\Steam\steamapps\common\Phantom Brigade\PhantomBrigade_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="Entitas">
-      <HintPath>home\michele_paolucci\VSCodeProjects\fragmentMod\Assemblies\Entitas.dll</HintPath>
+      <HintPath>Z:\Steam\steamapps\common\Phantom Brigade\PhantomBrigade_Data\Managed\Entitas.dll</HintPath>
     </Reference>
     <Reference Include="Entitas.Unity">
-      <HintPath>home\michele_paolucci\VSCodeProjects\fragmentMod\Assemblies\Entitas.Unity.dll</HintPath>
+      <HintPath>Z:\Steam\steamapps\common\Phantom Brigade\PhantomBrigade_Data\Managed\Entitas.Unity.dll</HintPath>
     </Reference>
     <Reference Include="System"/>
     <Reference Include="System.Core"/>
     <Reference Include="Unity.Entities">
-      <HintPath>home\michele_paolucci\VSCodeProjects\fragmentMod\Assemblies\Unity.Entities.dll</HintPath>
+      <HintPath>Z:\Steam\steamapps\common\Phantom Brigade\PhantomBrigade_Data\Managed\Unity.Entities.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>home\michele_paolucci\VSCodeProjects\fragmentMod\Assemblies\UnityEngine.dll</HintPath>
+      <HintPath>Z:\Steam\steamapps\common\Phantom Brigade\PhantomBrigade_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>home\michele_paolucci\VSCodeProjects\fragmentMod\Assemblies\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>Z:\Steam\steamapps\common\Phantom Brigade\PhantomBrigade_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>home\michele_paolucci\VSCodeProjects\fragmentMod\Assemblies\UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath>Z:\Steam\steamapps\common\Phantom Brigade\PhantomBrigade_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule">
-      <HintPath>home\michele_paolucci\VSCodeProjects\fragmentMod\Assemblies\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll</HintPath>
+      <HintPath>Z:\Steam\steamapps\common\Phantom Brigade\PhantomBrigade_Data\Managed\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
