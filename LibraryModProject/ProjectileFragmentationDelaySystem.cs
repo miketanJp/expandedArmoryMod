@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using Entitas;
+using PhantomBrigade;
+using PhantomBrigade.Combat.Systems;
 using PhantomBrigade.Data;
 using UnityEngine;
 
-namespace PhantomBrigade.Combat.Systems;
+namespace fragmentMod;
 
 public class ProjectileFragmentationDelaySystem : ReactiveSystem<CombatEntity>
 {
