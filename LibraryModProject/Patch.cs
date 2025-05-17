@@ -281,7 +281,7 @@ namespace fragmentMod
 						projSpeed: rigidbody.rb.velocity.magnitude,
 						targetOffsetRadius: 0.5f,
 						targetPoint: projectile.projectileGuidanceTargetPosition.v,
-						addedVelocity: Vector3.zero  
+						addedVelocity: Vector3.forward
 					);
 					
 					if (projectile.hasFlightInfo)
