@@ -31,8 +31,8 @@ for more informations about Phantom Brigade's Modding System and how it works, c
 
 ## Compatibility
 
-- **Game version(s) supported: ** 1.3.0
-- **Mod dependency(ies): ** None
+- **Game version(s) supported:** 1.3.0
+- **Mod dependency(ies):** None
 
 ## Contributing
 
