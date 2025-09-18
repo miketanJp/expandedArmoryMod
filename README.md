@@ -1,4 +1,4 @@
-## Expanded Armory Mody (formerly known as fragmentMod)
+## Expanded Armory Mod (formerly known as fragmentMod)
 This repository represents the project Expanded Armory Mod, a modification for the game [Phantom Brigade](https://braceyourselfgames.com/phantom-brigade/), a Hybrid Turn-based strategy game by [Brace Yourself Games](https://braceyourselfgames.com).
 
 Formerly known as **fragmentMod**, the main purpose of this mod was to introduce [MIRV Missiles](https://en.wikipedia.org/wiki/Multiple_independently_targetable_reentry_vehicle) with different splitting patterns to choose from. the main code project, available to public to meet **Brace Yourself Games' modding guidelines**, has been dismissed since Phantom Brigade version 1.2.0 as it introduces a flexible delayed fragmentation mechanics. from mod version 1.2.0 onward, the mod is using the stock implementation provided by the game.
