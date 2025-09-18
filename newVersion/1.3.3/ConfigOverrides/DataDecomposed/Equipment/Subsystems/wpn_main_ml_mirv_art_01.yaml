@@ -260,8 +260,8 @@ projectile:
   debugIndexRange: {}
   visual:
     body:
-      key: fx_projectile_missile_01_regular_blue
-      keyEnemy: fx_projectile_missile_01_regular_red
+      key: fx_projectile_missile_mirv
+      keyEnemy: 
       scale:
         x: 1.25
         y: 1.25

@@ -207,7 +207,7 @@ projectile:
   visual:
     body:
       key: fx_flame
-      keyEnemy: fx_flame
+      keyEnemy: 
       scale:
         x: 4
         y: 4

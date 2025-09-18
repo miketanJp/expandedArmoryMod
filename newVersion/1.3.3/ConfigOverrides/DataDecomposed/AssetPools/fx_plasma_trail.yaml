@@ -1,9 +1,0 @@
-path: Content/Prefabs/Pooled/ap_fx_thruster_flash
-limit: 500
-thresholdsActivated: false
-thresholdDist: 0
-timeThreshold: 0
-resetOnActivation: false
-clearInactiveChildren: true
-lifetimeUsed: true
-lifetime: 0.5

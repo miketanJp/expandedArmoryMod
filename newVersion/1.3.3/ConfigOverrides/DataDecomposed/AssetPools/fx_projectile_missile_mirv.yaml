@@ -1,5 +1,5 @@
-path: Content/Prefabs/Pooled/ap_fx_projectile_missile_01_small_blue
-limit: 200
+path: Content/Prefabs/Pooled/ap_fx_projectile_missile_01_regular
+limit: 1000
 thresholdsActivated: false
 thresholdDist: 0
 timeThreshold: 0
