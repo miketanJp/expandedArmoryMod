@@ -1,53 +1,58 @@
-## MIRV Missile (AKA FragmentMod)
-The present mod is a library mod for [Phantom Brigade](https://braceyourselfgames.com/phantom-brigade/), a Hybrid Turn-based strategy game by [Brace Yourself Games](https://braceyourselfgames.com).+
+## Expanded Armory Mody (formerly known as fragmentMod)
+This repository represents the project Expanded Armory Mod, a modification for the game [Phantom Brigade](https://braceyourselfgames.com/phantom-brigade/), a Hybrid Turn-based strategy game by [Brace Yourself Games](https://braceyourselfgames.com).
 
-The main purpose of this mod is to introduce [MIRV Missiles](https://en.wikipedia.org/wiki/Multiple_independently_targetable_reentry_vehicle) with different splitting patterns to choose from. Actually, wareheads are not yet truly independent as they still track and strike one or more targets around it.
+Formerly known as **fragmentMod**, the main purpose of this mod was to introduce [MIRV Missiles](https://en.wikipedia.org/wiki/Multiple_independently_targetable_reentry_vehicle) with different splitting patterns to choose from. the main code project, available to public to meet **Brace Yourself Games' modding guidelines**, has been dismissed since Phantom Brigade version 1.2.0 as it introduces a flexible delayed fragmentation mechanics. from mod version 1.2.0 onward, the mod is using the stock implementation provided by the game.
 
-NOTE: Library Mod is dismissed since Phantom Brigade version 1.2.0, as it introduces a better and more flexible implementation of delayed fragmentation. Therefore, mod version 1.2.0 onward the mod is using the official implementation provided by the game while the library mod project is still available.
+As a consequence, the mod in that state of things had no reasons to exist. After some thinking, the project has been evolved into **Expanded Armory Mod (E.A.M)**, with a renovated purpose to be a collection of custom weapons and armor sets in continuous development. As the name already suggests, it mains to expand the already existing parts in the game, putting the main focus of expanding the actual list of stock armor sets in the game.
 
-## Basic introduction
-The main idea to develop this kind of mod came when I tried, through weapon config files, to apply the same fragmentation properties used by shotguns as a similar system weren't available to Missile Launchers. This made me realized that approach wasn't technically possible as I needed to split the projectile after a set time. The system used in shotguns works in order to apply instant fragmentation (immediately after the projectiles are fired) and the fragmentation delay algorithm works specifically for that kind of weapons, which is why I decided to develop a fragmentation system specifically for missiles.
+## Main features
 
-The mod uses custom properties in the subsystem YAML file, each one of them can be customized with desired values.
-New projectiles created in that istant will then inherit the properties of the original warhead (guidance data, projectile speed, lifetime, etc.), since the child projectiles will either cause conflicts or empty assets with no properties attached ( = mere game props with no "soul").
+- Custom parts/armor kitbash (eliminating the dependency of using stock kitbash)
+- Unique visual/attachments
+- Non existant weapons
 
-<b>Custom values used</b> (Library code version)
-- fragment_count (ints) → The number of fragments created from the original warhead while splitted;
-- fragment_delay (floats) → The interval of the missile before splitting into several fragments from the moment it has been fired;
-- fragment_scatter_angle (floats) → Scatter angle of the splitting missiles. It relies on wpn_scatter_angle property;
-- fragment_key (strings) → The subsystem (actual weapon) where the injection should happen.
-- fragment_hardpoint (strings) → The weapon hardpoint where the fragmentation will be performed;
-- fragment_fanout (strings) → Fanout pattern to perform the desired splitting mode;
-- fragment_scale (vectors) → New projectiles scale express in Vector3 coordinates (X,Y,Z)
+## Parts list (Codex) - [WIP]
+- [Weapons](modCodex/WEAPONS.md)
+- [Armor sets](modCodex/ARMOR_SETS.md)
 
-<b>WARNING:</b> in order to avoid issues, it is strongly adviced to set an amount between 18 and 23 as Unity Engine seems to make the exceeding amount disappear.
-However, the mod does also provided custom AssetPools limits to the projectiles just for testing if you want to fire lots of missiles at the cost of degraded performance on GPU.
+## Installation
 
-## Images
-![starbust](https://user-images.githubusercontent.com/88181255/188744853-dbecbb07-64be-403b-95ce-61c9e719f7cf.png)
-"Starburst" Pattern
+1. Go to PhantomBrigade folder, located at the following path:
+```C:\Users[USER]\AppData\Local\PhantomBrigade)```;
 
-![circular](https://user-images.githubusercontent.com/88181255/188744872-4971d4ce-05b7-419c-ae5d-b48cb301d5f8.png)
-"Circular" pattern
+2. Create a folder named Mods inside of it, if not present;
 
-## Live Demo
-https://user-images.githubusercontent.com/88181255/188748556-9b0dc88f-db61-4542-816c-647e1e9dcfc7.mp4
+3. In the zip archive, extract the whole mod folder and its content into Mods folder;
 
-## Changelog
+4. Start the game, as there is no need to enable the mod manually. 
 
-(2024-30-05) - Dismissed custom code in 1.1.4 as the stock delayed fragmentation is more flexible (featured introduced in Phantom Brigade 1.2.0). Handled the damage control over child projectiles.
-New Manufacturer added as well as its related icon to make it distinguish from other manufacturers, making it unique.
+for more informations about Phantom Brigade's Modding System and how it works, can be found [here](https://wiki.braceyourselfgames.com/en/PhantomBrigade/Modding/ModSystem)
 
-(2022-09-07) - The actual work for creating functional child projectiles from a original warhead is done and the mod is considered functional with no basic issues at runtime, Therefore I can consider it as a operational version 1.0.0 of the mod
 
-(2022-09-07) - At the moment, only 'Starbust' and 'Circular' patterns can be used
+## Compatibility
 
-(2023-03-09) - Fitted the whole mod structure of part preset format and refactored for PB 1.0
+- **Game version(s) supported: ** 1.3.0
+- **Mod dependency(ies): ** None
 
-## Known issues
-- [ ] Missile ignition sound event persists after missile(s) destruction. https://github.com/miketanJp/fragmentMod/issues/4
+## Contributing
 
-## Fixed issues
-- [x] Game broken when firing during combat. https://github.com/miketanJp/fragmentMod/issues/6
-- [x] Child Missiles' guidance towards map boundaries when force attack. https://github.com/miketanJp/fragmentMod/issues/5
-- [x] Game freeze on splitting caused by incorrect key reference and incompatible part preset format in 1.0
+People interested in contributing to this project in any way are welcome, althought not strictly necessary to adhere.
+
+But in the case you already decided to contribute, please see [CONTRIBUTING.md](CONTRIBUTING.md) for further informations.
+
+## License
+
+This project is licensed under the [BSD-3 License](LICENSE).
+
+## Credits
+
+- **Author(s)**
+    <br>Miketan
+- **Contributors**
+    <br>radionecrotic (code project)
+- **Special thanks**
+    <br> ichihito_ohi - 🇯🇵 translation
+
+## Media
+
+_WORK IN PROGRESS_
