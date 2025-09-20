@@ -87,11 +87,11 @@ jobs:
         with:
           name: eam_stable
 
+      - name: Move ZIP to root
+        run: mv eam_stable/eam_stable.zip .
+
       - name: Upload ZIP to release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh release upload "stable" eam_stable/eam_stable.zip
+        run: gh release upload "stable" eam_stable.zip
 
 
   publishFromPR:
