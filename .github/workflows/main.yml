@@ -68,7 +68,7 @@ jobs:
         with:
           name: eam_${{ steps.set_name.outputs.folder }}
           path: packaged/*
-
+          
   publishFromPush:
     name: release_push
     if: github.event_name == 'push'
@@ -93,7 +93,8 @@ jobs:
         run: |
           ZIP_PATH=$(find artifact_output -name '*.zip' | head -n 1)
           if [ -f "$ZIP_PATH" ]; then
-            gh release upload "${{ needs.modCompilePush.outputs.folder_name }}" "$ZIP_PATH"
+            gh release upload "${{ needs.modCompilePush.outputs.folder_name }}" "$ZIP_PATH" \
+              --repo "$GITHUB_REPOSITORY"
           else
             echo "❌ ZIP file not found in artifact_output"
             exit 1
@@ -125,8 +126,10 @@ jobs:
           if [ -f "$ZIP_PATH" ]; then
             gh release create "${{ needs.modCompilePR.outputs.folder_name }}" "$ZIP_PATH" \
               --title "${{ needs.modCompilePR.outputs.folder_name }}" \
-              --notes "Release from merged PR"
+              --notes "Release from merged PR" \
+              --repo "$GITHUB_REPOSITORY"
           else
             echo "❌ ZIP file not found in artifact_output"
             exit 1
           fi
+
