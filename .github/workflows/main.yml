@@ -61,20 +61,31 @@ jobs:
         name: eam_${{ env.FOLDER_NAME }}
         path: newVersion/*/
 
-  release:
-      name: Publish Release
-      needs: [modCompilePush, modCompilePR]
-      runs-on: ubuntu-latest
-      steps:
+  publish:
+    name: Publish Release
+    needs: [modCompilePush, modCompilePR]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Extract tag or branch name
+        run: |
+          REF_NAME=$(echo "${GITHUB_REF##*/}")
+          echo "TAG_NAME=$REF_NAME" >> $GITHUB_ENV
+
+      - name: Install GitHub CLI
+        run: sudo apt install gh
+
       - name: Publish Release
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
-        run: gh release edit "${{ github.ref_name }}" --draft=false
-      - uses: eregon/keep-last-n-releases@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          n: 3
-          remove_tags_without_release: true
+        run: |
+          gh auth setup-git
+          gh release edit "${{ env.TAG_NAME }}" --draft=false
+
+#      - name: Keep only last 5 releases
+#        uses: eregon/keep-last-n-releases@v1
+#        with:
+#          count: 5
+
     
