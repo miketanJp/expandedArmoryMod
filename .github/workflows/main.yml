@@ -70,11 +70,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: download_artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: eam_stable
-
 #      - name: zip_content
 #        run: |
 #          zip -r eam_stable newVersion/*/
@@ -87,14 +82,16 @@ jobs:
       - name: github_cli
         run: sudo apt install gh
 
+      - name: download_artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: eam_stable
+
       - name: Upload ZIP to release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh auth setup-git
-          gh release create "stable" eam_stable/eam_stable.zip \
-            --title "Release stable" \
-            --notes "Automated release with zipped artifact"
+          gh release upload "stable" eam_stable/eam_stable.zip
 
 
   publishFromPR:
