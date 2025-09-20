@@ -70,10 +70,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-#      - name: zip_content
-#        run: |
-#          zip -r eam_stable newVersion/*/
-      
+      - name: Check ZIP presence
+        run: ls -la eam_stable/
+
       - name: Extract tag or branch name
         run: |
           REF_NAME=$(echo "${GITHUB_REF##*/}")
@@ -87,11 +86,11 @@ jobs:
         with:
           name: eam_stable
 
-      - name: Move ZIP to root
-        run: mv eam_stable/eam_stable.zip .
-
       - name: Upload ZIP to release
-        run: gh release upload "stable" eam_stable.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload "stable" eam_stable/eam_stable.zip
 
 
   publishFromPR:
