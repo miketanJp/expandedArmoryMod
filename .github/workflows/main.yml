@@ -74,7 +74,7 @@ jobs:
           name: eam_${{ needs.modCompilePush.outputs.folder_name }}
 
       - name: Check contents
-        run: ls -la eam_${{ needs.modCompilePush.outputs.folder_name }}
+        run: ls -la eam_stable/
 
       - name: Upload ZIP to release
         env:
