@@ -9,6 +9,8 @@ on:
   push:
     branches:
       - stable
+    tags:
+      - 'v*'
 
 jobs:
   ## Run this job in case of a push to stable branch
@@ -59,7 +61,7 @@ jobs:
         name: eam_${{ env.FOLDER_NAME }}
         path: newVersion/*/
 
-  publish:
+  release:
       name: Publish Release
       needs: [modCompilePush, modCompilePR]
       runs-on: ubuntu-latest
@@ -68,7 +70,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-        run: gh release edit "${{ needs.release.outputs.tag }}" --draft=false
+        run: gh release edit "${{ github.ref_name }}" --draft=false
       - uses: eregon/keep-last-n-releases@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
