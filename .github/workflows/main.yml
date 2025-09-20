@@ -72,15 +72,16 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: eam_${{ needs.modCompilePush.outputs.folder_name }}
+          path: artifact_output
 
       - name: Check contents
-        run: ls -la eam_stable/
+        run: ls -la artifact_output
 
       - name: Upload ZIP to release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          ZIP_PATH=$(find eam_${{ needs.modCompilePush.outputs.folder_name }} -name '*.zip' | head -n 1)
+          ZIP_PATH=$(find artifact_output -name '*.zip' | head -n 1)
           if [ -f "$ZIP_PATH" ]; then
             gh release upload "${{ needs.modCompilePush.outputs.folder_name }}" "$ZIP_PATH"
           else
