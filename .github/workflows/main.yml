@@ -1,4 +1,4 @@
-name: zip_modPackage
+name: stable_release
 
 on:
   pull_request:
