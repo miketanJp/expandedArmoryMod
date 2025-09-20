@@ -77,7 +77,7 @@ jobs:
 
       - name: zip_content
         run: |
-          zip -r "eam_stable"
+          zip -r eam_stable newVersion/*/
       
       - name: Extract tag or branch name
         run: |
