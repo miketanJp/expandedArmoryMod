@@ -1,15 +1,17 @@
 name: zip_modPackage
 
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
       - develop
-      - feature/*
-  workflow_dispatch:
+      - main
 
 jobs:
   modCompile:
     name: compile
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
