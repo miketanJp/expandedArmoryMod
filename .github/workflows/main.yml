@@ -70,9 +70,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check ZIP presence
-        run: ls -la eam_stable/
-
       - name: Extract tag or branch name
         run: |
           REF_NAME=$(echo "${GITHUB_REF##*/}")
@@ -85,6 +82,9 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: eam_stable
+
+      - name: Check ZIP presence
+        run: ls -la eam_stable/
 
       - name: Upload ZIP to release
         env:
