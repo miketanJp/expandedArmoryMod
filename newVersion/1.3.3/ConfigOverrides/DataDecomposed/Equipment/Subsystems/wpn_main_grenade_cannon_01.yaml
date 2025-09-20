@@ -1,0 +1,631 @@
+hidden: false
+parent: back_wpn
+rating: 1
+textNameFromPreset: 
+textNameFromHardpoint: 
+textName:
+  split: true
+textDescFromPreset: 
+textDesc:
+  split: true
+hardpoints: 
+tags:
+- mnf_mrv01
+- category_wpn_hinged
+- activation_targeted_hinged
+- stand_and_shoot
+- type_force_root_rotation
+- type_range_strict
+statDistribution: ''
+stats:
+  act_charges:
+    value: 4
+    targetMode: 0
+    targetSocket: ''
+    targetHardpoint: ''
+  act_count:
+    value: 3
+    targetMode: 0
+    targetSocket: ''
+    targetHardpoint: ''
+  act_duration:
+    value: 1.8
+    targetMode: 0
+    targetSocket: ''
+    targetHardpoint: ''
+  act_heat:
+    value: 180
+    targetMode: 0
+    targetSocket: ''
+    targetHardpoint: ''
+  hp:
+    value: 2
+    targetMode: 0
+    targetSocket: ''
+    targetHardpoint: ''
+  mass:
+    value: 35
+    targetMode: 0
+    targetSocket: ''
+    targetHardpoint: ''
+  scrap_value:
+    value: 1
+    targetMode: 0
+    targetSocket: ''
+    targetHardpoint: ''
+  wpn_concussion:
+    value: 2
+    targetMode: 0
+    targetSocket: ''
+    targetHardpoint: ''
+  wpn_damage:
+    value: 95
+    targetMode: 0
+    targetSocket: ''
+    targetHardpoint: ''
+  wpn_damage_radius:
+    value: 25
+    targetMode: 0
+    targetSocket: ''
+    targetHardpoint: ''
+  wpn_impact:
+    value: 60
+    targetMode: 0
+    targetSocket: ''
+    targetHardpoint: ''
+  wpn_impact_radius:
+    value: 25
+    targetMode: 0
+    targetSocket: ''
+    targetHardpoint: ''
+  wpn_proj_lifetime:
+    value: 10
+    targetMode: 0
+    targetSocket: ''
+    targetHardpoint: ''
+  wpn_range_max:
+    value: 120
+    targetMode: 0
+    targetSocket: ''
+    targetHardpoint: ''
+  wpn_range_min:
+    value: 90
+    targetMode: 0
+    targetSocket: ''
+    targetHardpoint: ''
+  wpn_scatter_angle:
+    value: 30
+    targetMode: 0
+    targetSocket: ''
+    targetHardpoint: ''
+  wpn_scatter_angle_moving:
+    value: 45
+    targetMode: 0
+    targetSocket: ''
+    targetHardpoint: ''
+  wpn_scatter_radius:
+    value: 25
+    targetMode: 0
+    targetSocket: ''
+    targetHardpoint: ''
+  wpn_speed:
+    value: 15
+    targetMode: 0
+    targetSocket: ''
+    targetHardpoint: ''
+visuals: 
+attachments:
+  cannon_ammoRack_l:
+    key: kitbash_parts_01_box_short_01
+    centered: true
+    activated: true
+    position:
+      x: -1.2
+      y: 2.21
+      z: -3.32
+    rotation:
+      x: 0
+      y: 1
+      z: -1
+    scale:
+      x: 2
+      y: 2.5
+      z: 3
+  cannon_barrelBody01_r:
+    key: wpn_modular_body_02
+    centered: true
+    activated: true
+    position:
+      x: 1.202
+      y: 2.464
+      z: -3.546
+    rotation:
+      x: -40
+      y: 1
+      z: -1
+    scale:
+      x: 2.02
+      y: 1.5
+      z: 1.5
+  cannon_barrelBody02_r:
+    key: kitbash_parts_01_box_short_03
+    centered: true
+    activated: true
+    position:
+      x: 1.225
+      y: 3.283
+      z: -2.079
+    rotation:
+      x: -40
+      y: 1
+      z: -1
+    scale:
+      x: 1.43
+      y: 1.7
+      z: 3.6
+  cannon_barrelBody03_r:
+    key: wpn_modular_stock_03
+    centered: true
+    activated: true
+    position:
+      x: 1.209
+      y: 2.797
+      z: -1.75
+    rotation:
+      x: -128
+      y: 1
+      z: -0.6
+    scale:
+      x: 2.02
+      y: 3.042
+      z: 1.16
+  cannon_mainBody01_r:
+    key: kitbash_parts_01_box_short_01
+    centered: true
+    activated: true
+    position:
+      x: 1.2
+      y: 2.21
+      z: -3.32
+    rotation:
+      x: -40
+      y: 1
+      z: -1
+    scale:
+      x: 2
+      y: 2.5
+      z: 3
+  gunBarrel_01_r:
+    key: kitbash_parts_01_cylinder_medium_01
+    centered: true
+    activated: true
+    position:
+      x: 1.255
+      y: 4.884
+      z: -0.212
+    rotation:
+      x: -40
+      y: 1
+      z: -1
+    scale:
+      x: 0.9
+      y: 1
+      z: 3.5
+  gunBarrel_02_r:
+    key: kitbash_parts_01_cylinder_medium_01
+    centered: true
+    activated: true
+    position:
+      x: 1.198
+      y: 2.12
+      z: -3.505
+    rotation:
+      x: -40
+      y: 1
+      z: -1
+    scale:
+      x: 0.9
+      y: 1
+      z: 3.5
+  gunFiringPoint:
+    key: basuto_rifle_set_01_front
+    centered: true
+    activated: true
+    position:
+      x: 1.281
+      y: 6.105
+      z: 1.244
+    rotation:
+      x: -40
+      y: 1
+      z: -1
+    scale:
+      x: 0.4
+      y: 0.01
+      z: 0.01
+  joint01:
+    key: kitbash_parts_01_box_junction_90deg
+    centered: true
+    activated: true
+    position:
+      x: 0.1
+      y: 0.153
+      z: -0.871
+    rotation:
+      x: -140
+      y: 0
+      z: 0
+    scale:
+      x: 1
+      y: 1
+      z: 1
+  joint02:
+    key: kitbash_parts_01_box_long_02
+    centered: true
+    activated: true
+    position:
+      x: 0.08
+      y: 1.296
+      z: -2.374
+    rotation:
+      x: 41.21
+      y: 0
+      z: 0
+    scale:
+      x: 1
+      y: 1
+      z: 1.3
+  joint03:
+    key: kitbash_parts_01_cylinder_short_02
+    centered: true
+    activated: true
+    position:
+      x: -0.39
+      y: 2.2
+      z: -3.33
+    rotation:
+      x: 0
+      y: -90
+      z: 0
+    scale:
+      x: 1
+      y: 1
+      z: 1
+  joint04:
+    key: kitbash_parts_01_cylinder_short_02
+    centered: true
+    activated: true
+    position:
+      x: 0.39
+      y: 2.2
+      z: -3.33
+    rotation:
+      x: 0
+      y: 90
+      z: 0
+    scale:
+      x: 1
+      y: 1
+      z: 1
+activation:
+  visual:
+    local:
+      #key: fx_muzzle_launcher_04
+      key: fx_projectile_pop
+      keyEnemy: 
+      scale:
+        x: 1
+        y: 1
+        z: 1
+      hueOffset: 
+      hueOffsetEnemy: 
+    root: 
+    localSocketOverride: 
+    localHardpointOverride: 
+    localTransformOverride: 
+  audio: 
+  light:
+    shared: true
+    key: wpn_sniper
+    custom: 
+  recoil:
+    key: recoil_flat
+  timing: 
+  hitReaction:
+    force: 1
+projectile:
+  debugIndexRange: {}
+  visual:
+    body:
+      key: fx_projectile_missile_mirv
+      keyEnemy: 
+      scale:
+        x: 0.8
+        y: 0.8
+        z: 0.8
+      colorOverride: 
+      colorOverrideEnemy: 
+    impact:
+      key: fx_aoe_explosion_01_large
+      #key: fx_projectile_pop
+      keyEnemy: ''
+      scale:
+        x: 3
+        y: 7
+        z: 3
+      hueOffset: 
+      hueOffsetEnemy: 
+    deactivation:
+      key: fx_aoe_explosion_01_large
+      #key: fx_projectile_pop
+      keyEnemy: ''
+      scale:
+        x: 2.6
+        y: 2.6
+        z: 2.6
+      hueOffset: 
+      hueOffsetEnemy: 
+  audio: 
+  damageDelay: 
+  distribution: 
+  range: 
+  fragmentation: 
+  fragmentationDelayed: 
+  falloff: 
+  falloffGlobal: 
+  animationFade:
+    speed: 10
+    distance: 3
+  ballistics: 
+  fuseProximity:
+    distance: 5
+    targetExclusive: true
+    inertBeforeHit: false
+    triggerWithoutEntity: false
+  hitResponse: 
+  splashDamage:
+    exponent: 0.45
+    fxDetonation: fx_aoe_explosion_01_large
+    fxDetonationScale: 2
+    fxArea: fx_aoe_volume_01
+    fxHit: fx_aoe_hit_01
+  splashImpact:
+    exponent: 2
+    triggerOnDamage: true
+  guidanceData:
+    rigidbodyMass: 1
+    rigidbodyDrag: 1
+    rigidbodyDriftDrag: 4
+    rigidbodyAngularDrag: 9
+    rigidbodyLift: 0.1
+    driverSteeringForce: 10
+    driverPitchForce: 10
+    driverAccelerationForce: 80
+    driverAccelerationMin: 1
+    inputProgressFromTarget: true
+    inputTargetHeightScale: 6
+    inputTargetOffsetPower: 3
+    inputThrottleDotPowerScale: 1
+    inputTargetPointLateralMode: Interleaved
+    steeringPID:
+      proportionalGain: 5
+      derivativeGain: 0.5
+      integralGain: 0
+    pitchPID:
+      proportionalGain: 5
+      derivativeGain: 0.5
+      integralGain: 0
+    inputTargetPointLateral: 
+    inputTargetHeight: !DataBlockGuidanceInputConstant
+      value: 0
+    inputTargetBlend: !DataBlockGuidanceInputCurve
+      curve:
+        modePostWrap: ClampForever
+        modePreWrap: ClampForever
+        keys:
+        - tv_tg:
+            x: 0.2736384
+            y: 0.80
+            z: -0.02377451
+            w: -0.02377451
+          w:
+            x: 0
+            y: 0.3333333
+          m: {}
+        - tv_tg:
+            x: 0.371517
+            y: 3
+            z: 2.311339
+            w: 2.311339
+          w:
+            x: 0.3333333
+            y: 0
+          m: {}
+    inputTargetUpdate: !DataBlockGuidanceInputCurve
+      curve:
+        modePostWrap: ClampForever
+        modePreWrap: ClampForever
+        keys:
+        - tv_tg:
+            x: 0
+            y: 1
+            z: 0
+            w: 0
+          w:
+            x: 0
+            y: 0
+          m: {}
+        - tv_tg:
+            x: 0.1237025
+            y: 1
+            z: 0
+            w: -5.542657
+          w:
+            x: 0.3333333
+            y: 0.3333333
+          m: {}
+        - tv_tg:
+            x: 0.3041214
+            y: 0
+            z: -5.542657
+            w: 0
+          w:
+            x: 0
+            y: 0
+          m: {}
+        - tv_tg:
+            x: 0
+            y: 0
+            z: 0
+            w: 0
+          w:
+            x: 0
+            y: 0
+          m: {}
+    inputTargetOffset: !DataBlockGuidanceInputCurve
+      curve:
+        modePostWrap: ClampForever
+        modePreWrap: ClampForever
+        keys:
+        - tv_tg:
+            x: 0
+            y: 1
+            z: 0
+            w: 0
+          w:
+            x: 0
+            y: 0
+          m: {}
+        - tv_tg:
+            x: 0.07216308
+            y: 1
+            z: 0
+            w: -5.880505
+          w:
+            x: 0
+            y: 0
+          m: {}
+        - tv_tg:
+            x: 0.2371149
+            y: 0.03
+            z: -5.880505
+            w: 0
+          w:
+            x: 0
+            y: 0
+          m: {}
+        - tv_tg:
+            x: 1
+            y: 0.03
+            z: 0
+            w: 0
+          w:
+            x: 0
+            y: 0
+          m: {}
+    inputSteering: !DataBlockGuidanceInputConstant
+      value: 1
+    inputThrottle: !DataBlockGuidanceInputConstant
+      value: 1
+    inputThrottleDotPower: 
+    directionCheck: 
+    velocityCompensation:
+      rangeLimit:
+        x: 20
+        y: 40
+      timeLimit: 1
+      iterations: 1
+      targetVelocityCompensation: 0.9
+      selfVelocityCompensation: 0.75
+      selfVelocityProjection: 0
+  guidanceAudio:
+    soundOnLaunch: weapon_missile_seeker_fire
+    soundOnPriming: weapon_missile_seeker_prime
+    soundOnExpiration: weapon_missile_seeker_explode
+    syncProximityRange:
+      x: 12
+      y: 24
+    syncPowerAngularVelocity: 1
+    syncSize: 1
+  statusBuildup: 
+  uiTrajectory:
+    scale: 36
+    fixedAreaDistance: 10
+    fixedAreaTime: 0.3
+    arrivalTimes:
+      x: 2.3
+      y: 3.4
+      z: 4.3
+    curve:
+      modePostWrap: ClampForever
+      modePreWrap: ClampForever
+      keys:
+      - tv_tg:
+          x: 0
+          y: 1
+          z: 0
+          w: 0
+        w:
+          x: 0
+          y: 0
+        m: {}
+      - tv_tg:
+          x: 0.05076062
+          y: 0.50
+          z: 0
+          w: 0
+        w:
+          x: 0
+          y: 0
+        m: {}
+      - tv_tg:
+          x: 0.1481468
+          y: 0.4716977
+          z: 7.916122
+          w: 7.916122
+        w:
+          x: 0.3333333
+          y: 0.3333333
+        m: {}
+      - tv_tg:
+          x: 0.3
+          y: 0.10
+          z: 0
+          w: 0
+        w:
+          x: 0.3333333
+          y: 0.3333333
+        m: {}
+  uiSpeedAverage:
+    f: 28
+  uiCoverageWeight: 
+  uiOptimumThreshold: 
+beam: 
+custom:
+  flags:
+  - damage_dispersed
+  ints: 
+  floats: 
+  vectors: 
+  strings: 
+functions:
+  general: 
+  targeted:
+  - context: on_wpn_fired
+    checks: 
+    functions:
+    - !SubsystemFunctionModifyOwner
+      functions:
+      - !CombatUnitStatusBuildup
+        key: timed_unstable
+        value: 0.37
+        source: Function
+  - context: on_part_activation
+    checks: 
+    functions:
+    - !SubsystemFunctionModifyOwner
+      functions:
+      - !CombatUnitStatusBuildup
+        key: timed_unstable
+        value: 0.35
+        source: Function

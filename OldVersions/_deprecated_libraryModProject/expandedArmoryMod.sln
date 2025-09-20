@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fragmentMod", "fragmentMod.csproj", "{53E0FA97-501D-423D-B248-CA3EC84CBA96}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "expandedArmoryMod", "expandedArmoryMod.csproj", "{53E0FA97-501D-423D-B248-CA3EC84CBA96}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

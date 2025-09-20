@@ -272,22 +272,18 @@ namespace fragmentMod
 						assetLinker.fxHelperProjectile.SetRange(1f);
 					}
 					
-					ScheduledAttackSystem.AddInflictedDamageComponents(partMirv, projectileNew);
+					ScheduledAttackSystem.AddInflictedDamageComponents(partMirv, projectileNew, null);
 					ScheduledAttackSystem.AttachGuidedProjectileData(
-						projectileNew,
-						projectile,
-						partMirv,
-						projectileData,
-						projectile.position.v,
-						facing,
-						rigidbody.rb.velocity.magnitude,
-						projectile.projectileGuidanceTargetPosition.v,
-						addedVelocity: 0);
-
-						
-
+						projectile: projectileNew,
+						projectileData: projectileData,
+						firingPoint: projectile.position.v,
+						finalDirection: facing,
+						projSpeed: rigidbody.rb.velocity.magnitude,
+						targetOffsetRadius: 0.5f,
+						targetPoint: projectile.projectileGuidanceTargetPosition.v,
+						addedVelocity: Vector3.forward
+					);
 					
-
 					if (projectile.hasFlightInfo)
 					{
 						projectileNew.ReplaceFlightInfo(

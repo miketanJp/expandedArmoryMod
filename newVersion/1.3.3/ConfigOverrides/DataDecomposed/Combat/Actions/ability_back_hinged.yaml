@@ -1,0 +1,112 @@
+dataUI:
+  icon: s_icon_l32_add_clone
+  color:
+    r: 0.69
+    g: 0
+    b: 0.16
+    a: 1
+  colorOverride:
+    r: 0.69
+    g: 0
+    b: 0.16
+    a: 1
+  sortingPriority: 410
+  hidden: false
+  irreversible: false
+  heating: true
+  offensive: true
+  modes: 
+dataCore:
+  locking: false
+  trackType: Double
+  paintingType: Targeting
+  heatType: DataConstant
+  durationType: Equipment
+  duration: 0
+  durationUnitStat: 
+  heatChange: 0
+  secondaryDirection: false
+  eventsOnValidation: 
+  eventsOnCreation: 
+  eventsOnModification: 
+  eventsOnStart: 
+  eventsOnEnd: 
+  eventsOnDispose: 
+  functionsOnValidation: 
+  functionsOnCreation: 
+  functionsOnModification: 
+  functionsOnStart: 
+  functionsOnUpdate: 
+  functionsOnEnd: 
+  functionsOnDispose: 
+  check:
+    encompassingMethod: RequireAll
+    tagsMethod: RequireAll
+    blueprintsMethod: RequireAll
+    partsMethod: RequireAll
+    subsystemsMethod: RequireAll
+    statsMethod: RequireAll
+    tags:
+    - classTag: mech
+      not: false
+    blueprints: 
+    parts:
+    - socket: back
+      not: true
+      requirement: Destroyed
+      tags: 
+    - socket: back
+      not: false
+      requirement: Tags
+      tags:
+        type_melee: false
+        stand_and_shoot: true
+  unitCheck:
+    exportCountToMemory: 
+    exportEntitiesToBlackboard: 
+    tags: 
+    name: 
+    faction: 
+    state: 
+    actionPlanned: 
+    locationOccupied: 
+    locationOccupiedUnlinked: 
+    relativeTransform: 
+    blueprints: 
+    classes:
+      mech: true
+    stats: 
+    statsNormalized: 
+    actionsInProgress: 
+    functions:
+    - !CombatValidateUnitPart
+      socket: back
+      preset: 
+      tags:
+        activation_targeted: false
+        activation_untargeted: false
+        activation_targeted_hinged: true
+      present: true
+dataFactionCheck: 
+dataMovement: 
+dataEquipment:
+  partUsed: true
+  partSocket: back
+dataAI:
+  actionEndsPlanning: false
+  possibleActionTypes:
+  - aiActionType: AttackMain
+    weightType: DataConstant
+    weightConstant: 15
+    partSocket: 
+    statUsed: 
+  - aiActionType: AttackSecondary
+    weightType: DataConstant
+    weightConstant: 5
+    partSocket: 
+    statUsed: 
+dataVisualsOnStart:
+  reactionLightsUsed: true
+  fxKey: ''
+dataCustom: 
+functionsTimed: 

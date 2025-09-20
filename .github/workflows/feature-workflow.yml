@@ -1,0 +1,33 @@
+name: zip_modPackage
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - develop
+      - main
+
+jobs:
+  modCompile:
+    name: compile
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: folder_name
+      run: |
+        SAFE_NAME=$(echo "${{ github.ref_name }}" | tr '/' '-')
+        echo "FOLDER_NAME=$SAFE_NAME" >> $GITHUB_ENV
+
+    - name: checkout_repository
+      uses: actions/checkout@v4
+
+    - name: check_contents
+      run: ls -la newVersion/
+
+    - name: upload
+      uses: actions/upload-artifact@v4
+      with:
+        name: eam_${{ env.FOLDER_NAME }}
+        path: newVersion/*/
