@@ -11,9 +11,10 @@ on:
       - stable
 
 jobs:
-  modCompile:
-    name: compile
-    if: github.event.pull_request.merged == true
+  ## Run this job in case of a push to stable branch
+  modCompilePush:
+    name: compile_push
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
 
     steps:
@@ -33,3 +34,28 @@ jobs:
       with:
         name: eam_${{ env.FOLDER_NAME }}
         path: newVersion/*/
+
+## Run this job in the event of a closed Pull Request (merged)
+  modCompilePR:
+    name: comple_closed_pr
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: folder_name
+      run: |
+        SAFE_NAME=$(echo "${{ github.ref_name }}" | tr '/' '-')
+        echo "FOLDER_NAME=$SAFE_NAME" >> $GITHUB_ENV
+
+    - name: checkout_repository
+      uses: actions/checkout@v4
+
+    - name: check_contents
+      run: ls -la newVersion/
+
+    - name: upload
+      uses: actions/upload-artifact@v4
+      with:
+        name: eam_${{ env.FOLDER_NAME }}
+        path: newVersion/*/
+    
