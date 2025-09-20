@@ -18,6 +18,8 @@ jobs:
     name: compile_push
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
+    outputs:
+      folder_name: ${{ steps.set_name.outputs.folder }}
 
     steps:
     - name: folder_name
@@ -71,8 +73,8 @@ jobs:
       - name: download_artifact
         uses: actions/download-artifact@v4
         with:
-          name: eam_${{ env.FOLDER_NAME }}
-
+          name: eam_${{ needs.modCompilePush.outputs.folder_name }}
+          
       - name: zip_content
         run: |
           zip -r "eam_${{env.FOLDER_NAME}}"
