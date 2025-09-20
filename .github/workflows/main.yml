@@ -73,11 +73,11 @@ jobs:
       - name: download_artifact
         uses: actions/download-artifact@v4
         with:
-          name: eam_${{ needs.modCompilePush.outputs.folder_name }}
-          
+          name: eam_stable
+
       - name: zip_content
         run: |
-          zip -r "eam_${{env.FOLDER_NAME}}"
+          zip -r "eam_stable"
       
       - name: Extract tag or branch name
         run: |
