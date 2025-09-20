@@ -6,6 +6,9 @@ on:
       - closed
     branches:
       - stable
+  push:
+    branches:
+      - stable
 
 jobs:
   modCompile:
