@@ -73,7 +73,7 @@ jobs:
           REF_NAME=$(echo "${GITHUB_REF##*/}")
           echo "TAG_NAME=$REF_NAME" >> $GITHUB_ENV
 
-      - name: Install GitHub CLI
+      - name: github_cli
         run: sudo apt install gh
 
       - name: publish_release
@@ -82,12 +82,12 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           gh auth setup-git
-          gh release edit "${{ env.TAG_NAME }}" --draft=false
+          gh release create "${{ env.TAG_NAME }}".zip --draft=false
 
   publishFromPR:
-    name: release_push
+    name: release_pr
     if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
-    needs: modCompilePush
+    needs: modCompilePR
     runs-on: ubuntu-latest
 
     steps:
@@ -96,7 +96,7 @@ jobs:
           REF_NAME=$(echo "${GITHUB_REF##*/}")
           echo "TAG_NAME=$REF_NAME" >> $GITHUB_ENV
 
-      - name: Install GitHub CLI
+      - name: github_cli
         run: sudo apt install gh
 
       - name: publish_release
@@ -105,7 +105,7 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           gh auth setup-git
-          gh release edit "${{ env.TAG_NAME }}" --draft=false
+          gh release create "${{ env.TAG_NAME }}".zip --draft=false
 
 #      - name: Keep only last 5 releases
 #        uses: eregon/keep-last-n-releases@v1
