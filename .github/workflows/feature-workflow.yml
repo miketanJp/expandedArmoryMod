@@ -6,7 +6,7 @@ on:
       - closed
     branches:
       - develop
-      - main
+      - stable
 
 jobs:
   modCompile:
