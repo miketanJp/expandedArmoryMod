@@ -61,9 +61,10 @@ jobs:
         name: eam_${{ env.FOLDER_NAME }}
         path: newVersion/*/
 
-  publish:
-    name: Publish Release
-    needs: [modCompilePush, modCompilePR]
+  publishFromPush:
+    name: release_push
+    if: github.event_name == 'push'
+    needs: modCompilePush
     runs-on: ubuntu-latest
 
     steps:
@@ -75,7 +76,30 @@ jobs:
       - name: Install GitHub CLI
         run: sudo apt install gh
 
-      - name: Publish Release
+      - name: publish_release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh auth setup-git
+          gh release edit "${{ env.TAG_NAME }}" --draft=false
+
+  publishFromPR:
+    name: release_push
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
+    needs: modCompilePush
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Extract tag or branch name
+        run: |
+          REF_NAME=$(echo "${GITHUB_REF##*/}")
+          echo "TAG_NAME=$REF_NAME" >> $GITHUB_ENV
+
+      - name: Install GitHub CLI
+        run: sudo apt install gh
+
+      - name: publish_release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
