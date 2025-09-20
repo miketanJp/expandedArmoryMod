@@ -1,0 +1,12 @@
+id: it.miketan.eam
+ver: 1.3.3
+includesConfigOverrides: true
+includesConfigEdits: true
+includesLibraries: false
+includesTextures: true
+includesLocalizationEdits: true
+includesLocalizations: false
+gameVersionMin: 1.3.0
+gameVersionMax: 
+name: 'Expanded Armory Mod (E.A.M.)'
+desc: Formerly known as fragmentMod, this mod is a collection consisting of new weapons and armor sets additions to the actual stock parts.
